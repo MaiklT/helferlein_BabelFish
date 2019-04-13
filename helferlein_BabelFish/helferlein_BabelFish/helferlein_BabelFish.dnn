@@ -1,0 +1,138 @@
+﻿<dotnetnuke type="Package" version="5.0">
+   <packages>
+      <package name="helferlein_BabelFish" type="Module" version="9.0.0">
+         <friendlyName>helferlein BabelFish</friendlyName>
+         <description>Localization component for DNN modules</description>
+         <owner>
+            <name>Michael Tobisch</name>
+            <organization>dnnwerk.at</organization>
+            <url>https://www.dnnwerk.at</url>
+            <email>noreply@dnnwerk.at</email>
+         </owner>
+         <license src="Documentation\License.html" />
+         <releaseNotes src="Documentation\ReleaseNotes.html" />
+         <dependencies>
+            <dependency type="CoreVersion">09.00.00</dependency>
+         </dependencies>
+         <components>
+            <component type="Cleanup" version="01.00.03">
+               <files>
+                  <basePath>bin</basePath>
+                  <file>
+                     <name>skmValidators.dll</name>
+                  </file>
+                  <file>
+                     <name>helferlein_Tools.dll</name>
+                  </file>
+               </files>
+            </component>
+            <component type="Script">
+               <scripts>
+                  <basePath>DesktopModules\helferlein_BabelFish</basePath>
+                  <script type="Install">
+                     <path>Providers\DataProviders\SqlDataProvider</path>
+                     <name>01.00.00.SqlDataProvider</name>
+                     <version>01.00.00</version>
+                  </script>
+                  <script type="Install">
+                     <path>Providers\DataProviders\SqlDataProvider</path>
+                     <name>01.01.00.SqlDataProvider</name>
+                     <version>01.01.00</version>
+                  </script>
+                  <script type="Install">
+                     <path>Providers\DataProviders\SqlDataProvider</path>
+                     <name>01.01.01.SqlDataProvider</name>
+                     <version>01.01.01</version>
+                  </script>
+                  <script type="UnInstall">
+                     <path>Providers\DataProviders\SqlDataProvider</path>
+                     <name>Uninstall.SqlDataProvider</name>
+                     <version>09.00.00</version>
+                  </script>
+               </scripts>
+            </component>
+            <component type="Module">
+               <desktopModule>
+                  <moduleName>helferlein_BabelFish</moduleName>
+                  <foldername>helferlein_BabelFish</foldername>
+                  <businessControllerClass>helferlein.DNN.Modules.BabelFish.Business.BabelFishController</businessControllerClass>
+                  <supportedFeatures>
+                     <supportedFeature type="Upgradeable" />
+                  </supportedFeatures>
+                  <moduleDefinitions>
+                     <moduleDefinition>
+                        <friendlyName>helferlein BabelFish</friendlyName>
+                        <defaultCacheTime>1200</defaultCacheTime>
+                        <moduleControls>
+                           <moduleControl>
+                              <controlKey />
+                              <controlSrc>DesktopModules/helferlein_BabelFish/BabelFish.ascx</controlSrc>
+                              <supportsPartialRendering>False</supportsPartialRendering>
+                              <controlTitle />
+                              <controlType>View</controlType>
+                              <iconFile />
+                              <helpUrl />
+                              <viewOrder>0</viewOrder>
+                           </moduleControl>
+                        </moduleControls>
+                     </moduleDefinition>
+                  </moduleDefinitions>
+               </desktopModule>
+            </component>
+            <component type="Assembly">
+               <assemblies>
+                  <basePath>bin</basePath>
+                  <assembly>
+                     <name>helferlein.dll</name>
+                     <version>5.0.0.0</version>
+                  </assembly>
+                  <assembly>
+                     <path>bin</path>
+                     <name>helferlein_BabelFish.dll</name>
+                     <version>9.0.0.0</version>
+                  </assembly>
+                  <assembly>
+                     <name>DocumentFormat.OpenXml.dll</name>
+                     <version>2.0.5022.0</version>
+                  </assembly>
+                  <assembly>
+                     <name>DocumentFormat.OpenXml.Extensions.dll</name>
+                     <version>2.1.3842.36318</version>
+                  </assembly>
+               </assemblies>
+            </component>
+            <component type="File">
+               <files>
+                  <basePath>DesktopModules\helferlein_BabelFish</basePath>
+                  <file>
+                     <path>App_LocalResources</path>
+                     <name>BabelFish.ascx.resx</name>
+                  </file>
+                  <file>
+                     <path>App_LocalResources</path>
+                     <name>CommonResources.ascx.resx</name>
+                  </file>
+                  <file>
+                     <name>BabelFish.ascx</name>
+                  </file>
+                  <file>
+                     <name>BabelFishMultiSelector.ascx</name>
+                  </file>
+                  <file>
+                     <name>BabelFishSelector.ascx</name>
+                  </file>
+                  <file>
+                     <name>helferlein_BabelFish.dnn</name>
+                  </file>
+                  <file>
+                     <name>KeyResourceEditor.ascx</name>
+                  </file>
+                  <file>
+                     <name>LocaleSelector.ascx</name>
+                  </file>
+               </files>
+            </component>
+         </components>
+      </package>
+   </packages>
+</dotnetnuke>

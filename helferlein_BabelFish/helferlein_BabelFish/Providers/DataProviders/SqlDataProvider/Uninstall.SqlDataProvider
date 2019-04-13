@@ -1,0 +1,86 @@
+-- DROP STORED PROCEDURES
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_CopyQualifier') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_CopyQualifier
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_CopyQualifierByLocale') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_CopyQualifierByLocale
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteLocale') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteLocale
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteQualifier') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteQualifier
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteString') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteString
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteStringKey') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteStringKey
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteStringKeyByLocale') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_DeleteStringKeyByLocale
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_DeletePortal') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_DeletePortal
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_GetNonFallBackStrings') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetNonFallBackStrings
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_GetQualifiers') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetQualifiers
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_GetString') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetString
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringById') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringById
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_GetStrings') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetStrings
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringsByQualifier') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringsByQualifier
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringsByQualifierAndStringKey') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringsByQualifierAndStringKey
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_InsertString') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_InsertString
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_UpdateString') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_UpdateString
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_UpdateStringById') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_UpdateStringById
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_UpdateStrings') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_UpdateStrings
+GO
+
+-- DROP TABLE
+IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'{databaseOwner}FK_{objectQualifier}helferlein_BabelFish_{objectQualifier}Portals') AND parent_object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish'))
+   ALTER TABLE {databaseOwner}{objectQualifier}helferlein_BabelFish DROP CONSTRAINT FK_{objectQualifier}helferlein_BabelFish_{objectQualifier}Portals
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish') AND type in (N'U'))
+   DROP TABLE {databaseOwner}{objectQualifier}helferlein_BabelFish
+GO
+

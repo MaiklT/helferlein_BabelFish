@@ -1,0 +1,155 @@
+
+ALTER PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetString
+   @PortalID int,
+   @Locale nvarchar(5),
+   @Qualifier nvarchar(100),
+   @StringKey nvarchar(100),
+   @FallBackLocale nvarchar(5)
+AS
+   BEGIN
+   IF (@Locale = @FallBackLocale)
+      /* -- This applies to 1. -- */
+      BEGIN
+         SELECT
+            PortalID,
+            ID,
+            Locale,
+            Qualifier,
+            StringKey,
+            StringText,
+            StringComment,
+            StringText AS FallBack,
+            StringComment AS FallBackComment
+         FROM
+            {databaseOwner}{objectQualifier}helferlein_BabelFish
+         WHERE
+            ((PortalID = @PortalID) AND (Locale = @Locale) AND (Qualifier = @Qualifier) AND (StringKey = @StringKey))
+      END
+   ELSE
+      BEGIN
+         DECLARE @Count int
+         SELECT @Count = COUNT(*) FROM {databaseOwner}{objectQualifier}helferlein_BabelFish WHERE ((PortalID = @PortalID) AND (Locale = @Locale) AND (Qualifier = @Qualifier) AND (StringKey = @StringKey))
+         IF @Count > 0
+            /* -- This applies to 2. -- */
+            BEGIN
+               SELECT
+                  PortalID,
+                  ID,
+                  Locale,
+                  Qualifier,
+                  StringKey,
+                  StringText,
+                  StringComment,
+                  (SELECT StringText FROM {databaseOwner}{objectQualifier}helferlein_BabelFish AS {objectQualifier}helferlein_BabelFish_FallBack WHERE (({objectQualifier}helferlein_BabelFish_FallBack.PortalID = {objectQualifier}helferlein_BabelFish.PortalID) AND ({objectQualifier}helferlein_BabelFish_FallBack.Locale = @FallBackLocale) AND ({objectQualifier}helferlein_BabelFish_FallBack.Qualifier = {objectQualifier}helferlein_BabelFish.Qualifier) AND ({objectQualifier}helferlein_BabelFish_FallBack.StringKey = {objectQualifier}helferlein_BabelFish.StringKey))) AS FallBack,
+                  (SELECT StringComment FROM {databaseOwner}{objectQualifier}helferlein_BabelFish AS {objectQualifier}helferlein_BabelFish_FallBack WHERE (({objectQualifier}helferlein_BabelFish_FallBack.PortalID = {objectQualifier}helferlein_BabelFish.PortalID) AND ({objectQualifier}helferlein_BabelFish_FallBack.Locale = @FallBackLocale) AND ({objectQualifier}helferlein_BabelFish_FallBack.Qualifier = {objectQualifier}helferlein_BabelFish.Qualifier) AND ({objectQualifier}helferlein_BabelFish_FallBack.StringKey = {objectQualifier}helferlein_BabelFish.StringKey))) AS FallBackComment
+               FROM
+                  {databaseOwner}{objectQualifier}helferlein_BabelFish
+               WHERE
+                  ((PortalID = @PortalID) AND (Locale = @Locale) AND (Qualifier = @Qualifier) AND (StringKey = @StringKey))
+            END
+         ELSE
+            /* -- This applies to 3. -- */
+            BEGIN
+               SELECT @Count = COUNT(*) FROM {databaseOwner}{objectQualifier}helferlein_BabelFish WHERE ((PortalID = @PortalID) AND (Locale = @FallBackLocale) AND (Qualifier = @Qualifier) AND (StringKey = @StringKey))
+               IF @Count > 0
+                  BEGIN
+                     SELECT
+                        PortalID,
+                        ID,
+                        @Locale AS Locale,
+                        Qualifier,
+                        StringKey,
+                        '' AS StringText,
+                        '' AS StringComment,
+                        StringText AS FallBack,
+                        StringComment AS FallBackComment
+                     FROM
+                        {databaseOwner}{objectQualifier}helferlein_BabelFish
+                     WHERE
+                        ((PortalID = @PortalID) AND (Locale = @FallBackLocale) AND (Qualifier = @Qualifier) AND (StringKey = @StringKey))
+                  END
+            END
+      END
+   END
+GO
+
+ALTER PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetStrings
+   @PortalID int,
+   @Locale nvarchar(5),
+   @Qualifier nvarchar(100),
+   @FallBackLocale nvarchar(5)
+AS
+   BEGIN
+      IF (@Locale = @FallBackLocale)
+         BEGIN
+            SELECT
+               PortalID,
+               ID,
+               Locale,
+               Qualifier,
+               StringKey,
+               StringText,
+               StringComment,
+               StringText AS FallBack,
+               StringComment AS FallBackComment
+            FROM
+               {databaseOwner}{objectQualifier}helferlein_BabelFish
+            WHERE
+               ((PortalID = @PortalID) AND (Locale = @Locale) AND (Qualifier = @Qualifier))
+         END
+      ELSE
+         BEGIN
+            CREATE TABLE #{objectQualifier}TempFish
+            (
+               PortalID int,
+               ID int,
+               Locale nvarchar(5),
+               Qualifier nvarchar(100),
+               StringKey nvarchar(36),
+               StringText nvarchar(max),
+               StringComment nvarchar(max),
+               FallBack nvarchar(max),
+               FallBackComment nvarchar(max)
+            )
+		      INSERT INTO #{objectQualifier}TempFish(PortalID, ID, Locale, Qualifier , StringKey, StringText, StringComment, FallBack, FallBackComment)
+            SELECT
+               PortalID,
+               ID,
+               Locale,
+               Qualifier,
+               StringKey,
+               StringText,
+               StringComment,
+               (SELECT StringText FROM {databaseOwner}{objectQualifier}helferlein_BabelFish AS {objectQualifier}helferlein_BabelFish_FallBack WHERE(({objectQualifier}helferlein_BabelFish_FallBack.PortalID = {objectQualifier}helferlein_BabelFish.PortalID) AND ({objectQualifier}helferlein_BabelFish_FallBack.Qualifier = {objectQualifier}helferlein_BabelFish.Qualifier) AND ({objectQualifier}helferlein_BabelFish_FallBack.StringKey = {objectQualifier}helferlein_BabelFish.StringKey) AND ({objectQualifier}helferlein_BabelFish_FallBack.Locale = @FallBackLocale))) AS FallBack,
+               (SELECT StringComment FROM {databaseOwner}{objectQualifier}helferlein_BabelFish AS {objectQualifier}helferlein_BabelFish_FallBack WHERE(({objectQualifier}helferlein_BabelFish_FallBack.PortalID = {objectQualifier}helferlein_BabelFish.PortalID) AND ({objectQualifier}helferlein_BabelFish_FallBack.Qualifier = {objectQualifier}helferlein_BabelFish.Qualifier) AND ({objectQualifier}helferlein_BabelFish_FallBack.StringKey = {objectQualifier}helferlein_BabelFish.StringKey) AND ({objectQualifier}helferlein_BabelFish_FallBack.Locale = @FallBackLocale))) AS FallBackComment
+            FROM {databaseOwner}{objectQualifier}helferlein_BabelFish
+            WHERE ((PortalID = @PortalID) AND (Locale = @Locale) AND (Qualifier = @Qualifier))
+            INSERT INTO #{objectQualifier}TempFish(PortalID, ID, Locale, Qualifier, StringKey, StringText, StringComment, FallBack, FallBackComment)
+            SELECT
+               PortalID,
+               ID,
+               @Locale AS Locale,
+               Qualifier,
+               StringKey,
+               '' AS StringText,
+               '' AS StringComment,
+               StringText AS FallBack,
+               StringComment AS FallBackComment
+            FROM {databaseOwner}{objectQualifier}helferlein_BabelFish
+            WHERE ((Locale = @FallBackLocale) AND (Qualifier = @Qualifier) AND (StringKey NOT IN (SELECT StringKey FROM {databaseOwner}{objectQualifier}helferlein_BabelFish WHERE ((Locale = @Locale) AND (Qualifier = @Qualifier)))))
+            SELECT
+               PortalID,
+               ID,
+               Locale,
+               Qualifier,
+               StringKey,
+               StringText,
+               StringComment,
+               FallBack,
+               FallBackComment
+            FROM
+               #{objectQualifier}TempFish
+         END
+   END
+GO
+
