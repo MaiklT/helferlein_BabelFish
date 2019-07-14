@@ -1,6 +1,6 @@
 ﻿/*
-helferlein.com ( http://www.helferlein.com )
-Michael Tobisch
+dnnWerk.at ( https://www.dnnwerk.at )
+(C) Michael Tobisch 2009-2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -27,7 +27,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.Text;
 
-namespace helferlein.DNN.Modules.BabelFish.UI
+namespace helferlein.DNN.Modules.BabelFish.Controls
 {
    public partial class BabelFishMultiSelector : PortalModuleBase
    {
@@ -47,8 +47,8 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       public string CssClass
       {
-         get { return this.BabelFishCheckBoxes.CssClass; }
-         set { this.BabelFishCheckBoxes.CssClass = value; }
+         get { return BabelFishCheckBoxes.CssClass; }
+         set { BabelFishCheckBoxes.CssClass = value; }
       }
 
       public bool IncludeOthers
@@ -59,26 +59,26 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       public bool AutoPostBack
       {
-         get { return this.BabelFishCheckBoxes.AutoPostBack; }
-         set { this.BabelFishCheckBoxes.AutoPostBack = value; }
+         get { return BabelFishCheckBoxes.AutoPostBack; }
+         set { BabelFishCheckBoxes.AutoPostBack = value; }
       }
 
       public int RepeatColumns
       {
-         get { return this.BabelFishCheckBoxes.RepeatColumns; }
-         set { this.BabelFishCheckBoxes.RepeatColumns = value; }
+         get { return BabelFishCheckBoxes.RepeatColumns; }
+         set { BabelFishCheckBoxes.RepeatColumns = value; }
       }
 
       public RepeatDirection RepeatDirection
       {
-         get { return this.BabelFishCheckBoxes.RepeatDirection; }
-         set { this.BabelFishCheckBoxes.RepeatDirection = value; }
+         get { return BabelFishCheckBoxes.RepeatDirection; }
+         set { BabelFishCheckBoxes.RepeatDirection = value; }
       }
 
       public RepeatLayout RepeatLayout
       {
-         get { return this.BabelFishCheckBoxes.RepeatLayout; }
-         set { this.BabelFishCheckBoxes.RepeatLayout = value; }
+         get { return BabelFishCheckBoxes.RepeatLayout; }
+         set { BabelFishCheckBoxes.RepeatLayout = value; }
       }
 
       public string Qualifier
@@ -94,7 +94,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI
             StringBuilder selectedValues = new StringBuilder();
             bool unselectedValues = false;
 
-            foreach (ListItem li in this.BabelFishCheckBoxes.Items)
+            foreach (ListItem li in BabelFishCheckBoxes.Items)
             {
                if (li.Selected)
                   selectedValues.Append(li.Value + ";");
@@ -111,11 +111,11 @@ namespace helferlein.DNN.Modules.BabelFish.UI
          }
          set
          {
-            if (!(String.IsNullOrEmpty(value)))
+            if (!(string.IsNullOrEmpty(value)))
             {
                List<string> selectedValues = new List<string>();
                selectedValues.AddRange(value.Split(new char[] { ';' }));
-               foreach (ListItem li in this.BabelFishCheckBoxes.Items)
+               foreach (ListItem li in BabelFishCheckBoxes.Items)
                   li.Selected = (selectedValues.IndexOf(li.Value) > -1);
             }
          }
@@ -123,7 +123,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       public ListItemCollection Items
       {
-         get { return this.BabelFishCheckBoxes.Items; }
+         get { return BabelFishCheckBoxes.Items; }
       }
 
       public string Filter
@@ -134,13 +134,13 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       protected override void OnInit(EventArgs e)
       {
-         this.InitializeComponent();
-         base.OnInit(e);
+         InitializeComponent();
+         OnInit(e);
       }
 
       protected void Page_Init(object sender, EventArgs e)
       {
-         this.LocalResourceFile = base.ControlPath + "/App_LocalResources/CommonResources";
+         LocalResourceFile = ControlPath + "/App_LocalResources/CommonResources";
       }
 
       protected void Page_Load(object sender, EventArgs e)
@@ -148,13 +148,13 @@ namespace helferlein.DNN.Modules.BabelFish.UI
          if (!(Page.IsPostBack))
          {
             ListItem li;
-            List<BabelFishInfo> aquarium = this.BabelFishController.GetStrings(base.PortalId, CultureInfo.CurrentCulture.Name, this.Qualifier);
+            List<BabelFishInfo> aquarium = BabelFishController.GetStrings(PortalId, CultureInfo.CurrentCulture.Name, Qualifier);
 
-            if (!(String.IsNullOrEmpty(this.Filter)))
+            if (!(string.IsNullOrEmpty(Filter)))
             {
                List<string> filtervalues = new List<string>();
                List<BabelFishInfo> filteredFish = new List<BabelFishInfo>();
-               filtervalues.AddRange(this.Filter.Split(new char[] { ';' }));
+               filtervalues.AddRange(Filter.Split(new char[] { ';' }));
 
                foreach (BabelFishInfo fish in aquarium)
                {
@@ -164,34 +164,34 @@ namespace helferlein.DNN.Modules.BabelFish.UI
                aquarium = filteredFish;
             }
             aquarium.Sort(new BabelFishComparer().CompareByDisplayValue);
-            this.BabelFishCheckBoxes.DataSource = aquarium;
-            this.BabelFishCheckBoxes.DataTextField = "DisplayValue";
-            this.BabelFishCheckBoxes.DataValueField = "StringKey";
-            this.BabelFishCheckBoxes.DataBind();
-            if (this.IncludeOthers)
+            BabelFishCheckBoxes.DataSource = aquarium;
+            BabelFishCheckBoxes.DataTextField = "DisplayValue";
+            BabelFishCheckBoxes.DataValueField = "StringKey";
+            BabelFishCheckBoxes.DataBind();
+            if (IncludeOthers)
             {
                li = new ListItem();
                li.Value = "BABELFISH_SYSTEM_ITEM_OTHERS";
                li.Text = Localization.GetString("Others.Text", LocalResourceFile);
-               this.BabelFishCheckBoxes.Items.Add(li);
+               BabelFishCheckBoxes.Items.Add(li);
             }
          }
       }
 
       protected void BabelFishCheckBoxes_SelectedIndexChanged(object sender, EventArgs e)
       {
-         this.OnSelectedIndexChanged(e);
+         OnSelectedIndexChanged(e);
       }
 
       private void InitializeComponent()
       {
-         this.BabelFishCheckBoxes.SelectedIndexChanged += new EventHandler(this.BabelFishCheckBoxes_SelectedIndexChanged);
+         BabelFishCheckBoxes.SelectedIndexChanged += new EventHandler(BabelFishCheckBoxes_SelectedIndexChanged);
       }
 
       private void OnSelectedIndexChanged(EventArgs e)
       {
-         if (this.SelectedIndexChanged != null)
-            this.SelectedIndexChanged(this, e);
+         if (SelectedIndexChanged != null)
+            SelectedIndexChanged(this, e);
       }
    }
 }

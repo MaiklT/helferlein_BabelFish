@@ -1,6 +1,6 @@
 ﻿/*
-helferlein.com ( http://www.helferlein.com )
-Michael Tobisch
+dnnWerk.at ( https://www.dnnwerk.at )
+(C) Michael Tobisch 2009-2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -17,9 +17,9 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 */
 
-using System;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Localization;
+using System;
 
 namespace helferlein.DNN.Modules.BabelFish.UI
 {
@@ -27,7 +27,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-         this.BabelFishLabel.Text = Localization.GetString("BabelFishLabel.Text", LocalResourceFile);
+         BabelFishLabel.Text = Localization.GetString("BabelFishLabel.Text", LocalResourceFile);
       }
    }
 }

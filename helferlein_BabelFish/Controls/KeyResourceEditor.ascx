@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="KeyResourceEditor.ascx.cs" Inherits="helferlein.DNN.Modules.BabelFish.UI.KeyResourceEditor" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="KeyResourceEditor.ascx.cs" Inherits="helferlein.DNN.Modules.BabelFish.Controls.KeyResourceEditor" %>
 
 <%@ Register Assembly="DotNetNuke" Namespace="DotNetNuke.UI.WebControls" TagPrefix="dnn" %>
 <%@ Register Src="~/controls/labelcontrol.ascx" TagName="Label" TagPrefix="dnn" %>

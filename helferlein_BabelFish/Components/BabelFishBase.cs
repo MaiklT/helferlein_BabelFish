@@ -1,6 +1,6 @@
 ﻿/*
-helferlein.com ( http://www.helferlein.com )
-Michael Tobisch
+dnnWerk.at ( https://www.dnnwerk.at )
+(C) Michael Tobisch 2009-2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -33,7 +33,7 @@ namespace helferlein.DNN.Modules.BabelFish
          get
          {
             string appPath = HttpContext.Current.Request.ApplicationPath;
-            return  appPath + ((appPath.EndsWith("/")) ? String.Empty : "/") + "DesktopModules/helferlein_BabelFish/App_LocalResources/CommonResources";
+            return  appPath + ((appPath.EndsWith("/")) ? string.Empty : "/") + "DesktopModules/helferlein_BabelFish/App_LocalResources/CommonResources";
          }
       }
    }

@@ -1,13 +1,13 @@
 ﻿//------------------------------------------------------------------------------
 // <automatisch generiert>
-//     Der Code wurde von einem Tool generiert.
+//     Dieser Code wurde von einem Tool generiert.
 //
-//     Änderungen an der Datei führen möglicherweise zu falschem Verhalten, und sie gehen verloren, wenn
-//     der Code erneut generiert wird.
+//     Änderungen an dieser Datei können fehlerhaftes Verhalten verursachen und gehen verloren, wenn
+//     der Code neu generiert wird.
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace helferlein.DNN.Modules.BabelFish.UI {
+namespace helferlein.DNN.Modules.BabelFish.Controls {
     
     
     public partial class LocaleSelector {
@@ -17,7 +17,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel UpdateRequestPanel;
         
@@ -26,7 +26,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image UpdateRequestImage;
         
@@ -35,7 +35,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label UpdateRequestLabel;
         
@@ -44,7 +44,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.UserControls.LabelControl LocalesLabel;
         
@@ -53,7 +53,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList LocalesDropDownList;
         
@@ -62,7 +62,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox DisabledLocalesCheckBox;
         
@@ -71,7 +71,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.UserControls.LabelControl DisabledLocalesLabel;
         
@@ -80,7 +80,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox AutoSaveCheckBox;
         
@@ -89,7 +89,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.UserControls.LabelControl AutoSaveLabel;
     }

@@ -1,6 +1,6 @@
 ﻿/*
-helferlein.com ( http://www.helferlein.com )
-Michael Tobisch
+dnnWerk.at ( https://www.dnnwerk.at )
+(C) Michael Tobisch 2009-2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -17,24 +17,23 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 */
 
+using DotNetNuke.Common;
+using DotNetNuke.Entities.Modules;
+using DotNetNuke.Security;
+using DotNetNuke.Services.Exceptions;
+using DotNetNuke.Services.Localization;
+using helferlein.DNN.Modules.BabelFish.Business;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Web.UI.WebControls;
-using DotNetNuke.Common;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.Exceptions;
-using DotNetNuke.Services.Localization;
-using helferlein.DNN.Modules.BabelFish.Business;
-using DotNetNuke.Entities.Portals;
-using DotNetNuke.Security;
 
-namespace helferlein.DNN.Modules.BabelFish.UI
+namespace helferlein.DNN.Modules.BabelFish.Controls
 {
    public partial class KeyResourceEditor : PortalModuleBase
    {
-      protected global::helferlein.DNN.Modules.BabelFish.UI.LocaleSelector LocaleSelector;
+      protected LocaleSelector LocaleSelector;
 
       private BabelFishController _babelFishController = null;
       private PortalSecurity _portalSecurity = null;
@@ -92,39 +91,39 @@ namespace helferlein.DNN.Modules.BabelFish.UI
       {
          get
          {
-            object o = base.ViewState["IncludeComment"];
+            object o = ViewState["IncludeComment"];
             if (o == null) return false;
             else return Convert.ToBoolean(o);
          }
          set
          {
-            base.ViewState["IncludeComment"] = value;
-            this.KeyResourceCommentPanel.Visible = value;
+            ViewState["IncludeComment"] = value;
+            KeyResourceCommentPanel.Visible = value;
          }
       }
 
       public bool AutoSave
       {
-         get { return this.LocaleSelector.AutoSave; }
-         set { this.LocaleSelector.AutoSave = value; }
+         get { return LocaleSelector.AutoSave; }
+         set { LocaleSelector.AutoSave = value; }
       }
 
       public bool ShowAutoSave
       {
-         get { return this.LocaleSelector.ShowAutoSave; }
-         set { this.LocaleSelector.ShowAutoSave = value; }
+         get { return LocaleSelector.ShowAutoSave; }
+         set { LocaleSelector.ShowAutoSave = value; }
       }
 
       public bool ShowDisabledLocaled
       {
-         get { return this.LocaleSelector.ShowDisabledLocales; }
-         set { this.LocaleSelector.ShowDisabledLocales = value; }
+         get { return LocaleSelector.ShowDisabledLocales; }
+         set { LocaleSelector.ShowDisabledLocales = value; }
       }
 
       public bool ShowUpdateRequestPanel
       {
-         get { return this.LocaleSelector.ShowUpdateRequestPanel; }
-         set { this.LocaleSelector.ShowUpdateRequestPanel = value; }
+         get { return LocaleSelector.ShowUpdateRequestPanel; }
+         set { LocaleSelector.ShowUpdateRequestPanel = value; }
       }
 
       private string CurrentKey
@@ -135,27 +134,27 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       protected void Page_Init(object sender, EventArgs e)
       {
-         this.LocalResourceFile = String.Format("{0}/App_LocalResources/CommonResources", base.ControlPath);
-         this.KeyResourcesGrid.RowDataBound += new GridViewRowEventHandler(this.KeyResourcesGrid_RowDataBound);
-         this.AddButton.Click += new EventHandler(this.AddButton_Click);
-         this.BackButton.Click += new EventHandler(this.BackButton_Click);
-         this.UpdateReturnButton.Click += new EventHandler(this.UpdateReturnButton_Click);
-         this.UpdateButton.Click += new EventHandler(this.UpdateButton_Click);
-         this.CancelButton.Click += new EventHandler(this.CancelButton_Click);
-         this.LocaleSelector.SelectedIndexChanged += new EventHandler(LocaleSelector_SelectedIndexChanged);
-         this.LocaleSelector.UpdateRequested += new EventHandler(LocaleSelector_UpdateRequested);
+         LocalResourceFile = string.Format("{0}/App_LocalResources/CommonResources", ControlPath);
+         KeyResourcesGrid.RowDataBound += new GridViewRowEventHandler(KeyResourcesGrid_RowDataBound);
+         AddButton.Click += new EventHandler(AddButton_Click);
+         BackButton.Click += new EventHandler(BackButton_Click);
+         UpdateReturnButton.Click += new EventHandler(UpdateReturnButton_Click);
+         UpdateButton.Click += new EventHandler(UpdateButton_Click);
+         CancelButton.Click += new EventHandler(CancelButton_Click);
+         LocaleSelector.SelectedIndexChanged += new EventHandler(LocaleSelector_SelectedIndexChanged);
+         LocaleSelector.UpdateRequested += new EventHandler(LocaleSelector_UpdateRequested);
       }
 
       protected void Page_Load(object sender, EventArgs e)
       {
          if (!(Page.IsPostBack))
          {
-            this.BindGrid();
+            BindGrid();
 
-            this.KeyTextBox.MaxLength = this.MaxKeyLength;
-            this.KeyTextBox.Width = Unit.Parse(Convert.ToString(Math.Min(Convert.ToInt32(this.MaxKeyLength), 20)) + "em");
+            KeyTextBox.MaxLength = MaxKeyLength;
+            KeyTextBox.Width = Unit.Parse(Convert.ToString(Math.Min(Convert.ToInt32(MaxKeyLength), 20)) + "em");
 
-            this.SetErrorMessages();
+            SetErrorMessages();
          }
       }
 
@@ -166,7 +165,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI
          {
             case DataControlRowType.Header:
                foreach (TableCell tc in e.Row.Cells)
-                  if (!(String.IsNullOrEmpty(tc.Text)))
+                  if (!(string.IsNullOrEmpty(tc.Text)))
                      tc.Text = Localization.GetString(tc.Text + ".Header", LocalResourceFile);
                break;
             case DataControlRowType.DataRow:
@@ -176,16 +175,16 @@ namespace helferlein.DNN.Modules.BabelFish.UI
                ImageButton deleteButton = (ImageButton)e.Row.FindControl("DeleteButton");
                deleteButton.AlternateText = Localization.GetString("cmdDelete.Text");
                deleteButton.CommandArgument = ((DataRowView)e.Row.DataItem)["StringKey"].ToString();
-               deleteButton.OnClientClick = "return confirm('" + String.Format(Localization.GetString("ConfirmDelete.Text", BabelfishBase.CommonResourceFile), ((DataRowView)e.Row.DataItem)["StringKey"].ToString().Replace("'", @"\'")) + "');";
+               deleteButton.OnClientClick = "return confirm('" + string.Format(Localization.GetString("ConfirmDelete.Text"), ((DataRowView)e.Row.DataItem)["StringKey"].ToString().Replace("'", @"\'")) + "');";
                break;
             case DataControlRowType.EmptyDataRow:
                Label emptyDataLabel = (Label)e.Row.FindControl("EmptyDataLabel");
                string dataItemName;
-               if ((!(String.IsNullOrEmpty(this.ExternalResourceFile))) && (!(String.IsNullOrEmpty(Localization.GetString(this.DataItemName + ".Text", this.ExternalResourceFile)))))
-                  dataItemName = Localization.GetString(this.DataItemName + ".Text", this.ExternalResourceFile);
+               if ((!(string.IsNullOrEmpty(ExternalResourceFile))) && (!(string.IsNullOrEmpty(Localization.GetString(DataItemName + ".Text", ExternalResourceFile)))))
+                  dataItemName = Localization.GetString(DataItemName + ".Text", ExternalResourceFile);
                else
-                  dataItemName = this.DataItemName;
-               emptyDataLabel.Text = String.Format(Localization.GetString("EmptyDataLabel.Text", LocalResourceFile), dataItemName.ToLower(), Localization.GetString("Add"));
+                  dataItemName = DataItemName;
+               emptyDataLabel.Text = string.Format(Localization.GetString("EmptyDataLabel.Text", LocalResourceFile), dataItemName.ToLower(), Localization.GetString("Add"));
                break;
             default:
                break;
@@ -195,34 +194,34 @@ namespace helferlein.DNN.Modules.BabelFish.UI
       protected void EditButton_Click(object sender, EventArgs e)
       {
          ImageButton editButton = (ImageButton)sender;
-         this.CurrentKey = editButton.CommandArgument;
-         this.SetMode("Edit");
-         this.SetValues();
+         CurrentKey = editButton.CommandArgument;
+         SetMode("Edit");
+         SetValues();
       }
 
       protected void LocaleSelector_SelectedIndexChanged(object sender, EventArgs e)
       {
-         this.SetValues();
+         SetValues();
       }
 
       protected void LocaleSelector_UpdateRequested(object sender, EventArgs e)
       {
          LocaleSelector localeSelector = (LocaleSelector)sender;
-         this.Update(localeSelector.ProcessedLocale);
+         Update(localeSelector.ProcessedLocale);
       }
 
       protected void AddButton_Click(object sender, EventArgs e)
       {
-         this.CurrentKey = String.Empty;
-         this.SetMode("Edit");
-         this.SetValues();
+         CurrentKey = string.Empty;
+         SetMode("Edit");
+         SetValues();
       }
 
       protected void DeleteButton_Click(object sender, EventArgs e)
       {
          ImageButton deleteButton = (ImageButton)sender;
-         this.BabelFishController.DropKey(base.PortalId, this.BabelFishQualifier, deleteButton.CommandArgument);
-         this.BindGrid();
+         BabelFishController.DropKey(PortalId, BabelFishQualifier, deleteButton.CommandArgument);
+         BindGrid();
       }
 
       protected void BackButton_Click(object sender, EventArgs e)
@@ -232,27 +231,27 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       protected void UpdateReturnButton_Click(object sender, EventArgs e)
       {
-         if (this.Update(this.LocaleSelector.ProcessedLocale))
+         if (Update(LocaleSelector.ProcessedLocale))
          {
-            this.CurrentKey = String.Empty;
-            this.SetMode("Grid");
+            CurrentKey = string.Empty;
+            SetMode("Grid");
          }
       }
 
       protected void UpdateButton_Click(object sender, EventArgs e)
       {
-         this.Update(this.LocaleSelector.ProcessedLocale);
+         Update(LocaleSelector.ProcessedLocale);
       }
 
       protected void CancelButton_Click(object sender, EventArgs e)
       {
-         this.CurrentKey = String.Empty;
-         this.SetMode("Grid");
+         CurrentKey = string.Empty;
+         SetMode("Grid");
       }
 
       private void BindGrid()
       {
-         List<BabelFishInfo> keys = this.BabelFishController.GetStrings(base.PortalId, CultureInfo.CurrentCulture.Name, this.BabelFishQualifier, false);
+         List<BabelFishInfo> keys = BabelFishController.GetStrings(PortalId, CultureInfo.CurrentCulture.Name, BabelFishQualifier, false);
 
          DataTable values = new DataTable();
          DataColumn keyColumn = new DataColumn("StringKey", typeof(string));
@@ -273,62 +272,62 @@ namespace helferlein.DNN.Modules.BabelFish.UI
             row["DisplayValue"] = k.DisplayValue;
             values.Rows.Add(row);
          }
-         this.KeyResourcesGrid.DataSource = values;
-         // this.KeyResourcesGrid.Sort("DisplayValue", SortDirection.Ascending);
-         this.KeyResourcesGrid.DataBind();
+         KeyResourcesGrid.DataSource = values;
+         // KeyResourcesGrid.Sort("DisplayValue", SortDirection.Ascending);
+         KeyResourcesGrid.DataBind();
       }
 
       private void SetMode(string mode)
       {
          if (mode == "Grid")
          {
-            this.GridPanel.Visible = true;
-            this.LocaleSelector.Reset();
-            this.EditPanel.Visible = false;
-            this.BindGrid();
+            GridPanel.Visible = true;
+            LocaleSelector.Reset();
+            EditPanel.Visible = false;
+            BindGrid();
          }
          else
          {
-            this.GridPanel.Visible = false;
-            this.EditPanel.Visible = true;
+            GridPanel.Visible = false;
+            EditPanel.Visible = true;
          }
       }
 
       private void SetValues()
       {
-         if (!(String.IsNullOrEmpty(this.CurrentKey)))
+         if (!(string.IsNullOrEmpty(CurrentKey)))
          {
             // We're in edit mode
-            BabelFishInfo babelFish = this.BabelFishController.GetString(base.PortalId, this.LocaleSelector.CurrentLocale, this.BabelFishQualifier, this.CurrentKey);
-            this.KeyTextBox.Text = this.CurrentKey;
-            this.KeyTextBox.Enabled = false;
+            BabelFishInfo babelFish = BabelFishController.GetString(PortalId, LocaleSelector.CurrentLocale, BabelFishQualifier, CurrentKey);
+            KeyTextBox.Text = CurrentKey;
+            KeyTextBox.Enabled = false;
             if (babelFish == null)
             {
-               this.KeyResourceTextBox.Text = String.Empty;
-               this.KeyResourceCommentTextBox.Text = String.Empty;
+               KeyResourceTextBox.Text = string.Empty;
+               KeyResourceCommentTextBox.Text = string.Empty;
             }
             else
             {
-               this.KeyResourceTextBox.Text = babelFish.StringText;
-               this.KeyResourceCommentTextBox.Text = babelFish.StringComment;
+               KeyResourceTextBox.Text = babelFish.StringText;
+               KeyResourceCommentTextBox.Text = babelFish.StringComment;
             }
          }
          else
          {
             // We're in append mode
-            this.KeyTextBox.Text = String.Empty;
-            this.KeyTextBox.Enabled = true;
-            this.KeyResourceTextBox.Text = String.Empty;
-            this.KeyResourceCommentTextBox.Text = String.Empty;
+            KeyTextBox.Text = string.Empty;
+            KeyTextBox.Enabled = true;
+            KeyResourceTextBox.Text = string.Empty;
+            KeyResourceCommentTextBox.Text = string.Empty;
          }
-         this.KeyRequiredImage.AlternateText = Localization.GetString("Required.Text");
-         this.KeyResourceRequiredImage.AlternateText = Localization.GetString("Required.Text");
+         KeyRequiredImage.AlternateText = Localization.GetString("Required.Text");
+         KeyResourceRequiredImage.AlternateText = Localization.GetString("Required.Text");
       }
 
       private void SetErrorMessages()
       {
-         this.KeyValidator.ErrorMessage = Localization.GetString("KeyValidator.ErrorMessage", LocalResourceFile);
-         this.KeyResourceValidator.ErrorMessage = Localization.GetString("KeyResourceValidator.ErrorMessage", LocalResourceFile);
+         KeyValidator.ErrorMessage = Localization.GetString("KeyValidator.ErrorMessage", LocalResourceFile);
+         KeyResourceValidator.ErrorMessage = Localization.GetString("KeyResourceValidator.ErrorMessage", LocalResourceFile);
       }
 
       private bool Update(string locale)
@@ -339,12 +338,12 @@ namespace helferlein.DNN.Modules.BabelFish.UI
             Page.Validate();
             if (Page.IsValid)
             {
-               if (this.KeyTextBox.Enabled)
-                  this.BabelFishController.Add(this.PortalId, locale, this.BabelFishQualifier, this.KeyTextBox.Text, this.KeyResourceTextBox.Text, this.PortalSecurity.InputFilter(this.KeyResourceCommentTextBox.Text, PortalSecurity.FilterFlag.MultiLine | PortalSecurity.FilterFlag.NoMarkup));
+               if (KeyTextBox.Enabled)
+                  BabelFishController.Add(PortalId, locale, BabelFishQualifier, KeyTextBox.Text, KeyResourceTextBox.Text, PortalSecurity.InputFilter(KeyResourceCommentTextBox.Text, PortalSecurity.FilterFlag.MultiLine | PortalSecurity.FilterFlag.NoMarkup));
                else
-                  this.BabelFishController.Change(this.PortalId, locale, this.BabelFishQualifier, this.KeyTextBox.Text, this.KeyResourceTextBox.Text, this.PortalSecurity.InputFilter(this.KeyResourceCommentTextBox.Text, PortalSecurity.FilterFlag.MultiLine | PortalSecurity.FilterFlag.NoMarkup));
-               this.CurrentKey = this.KeyTextBox.Text;
-               this.KeyTextBox.Enabled = false;
+                  BabelFishController.Change(PortalId, locale, BabelFishQualifier, KeyTextBox.Text, KeyResourceTextBox.Text, PortalSecurity.InputFilter(KeyResourceCommentTextBox.Text, PortalSecurity.FilterFlag.MultiLine | PortalSecurity.FilterFlag.NoMarkup));
+               CurrentKey = KeyTextBox.Text;
+               KeyTextBox.Enabled = false;
                returnValue = true;
             }
          }

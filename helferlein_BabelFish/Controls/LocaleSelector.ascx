@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LocaleSelector.ascx.cs" Inherits="helferlein.DNN.Modules.BabelFish.UI.LocaleSelector" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LocaleSelector.ascx.cs" Inherits="helferlein.DNN.Modules.BabelFish.Controls.LocaleSelector" %>
 <%@ Register Src="~/controls/labelcontrol.ascx" TagName="Label" TagPrefix="dnn" %>
 
 <asp:Panel ID="UpdateRequestPanel" runat="server" Visible="false" EnableViewState="false">

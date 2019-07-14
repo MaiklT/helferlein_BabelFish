@@ -1,6 +1,6 @@
 ﻿/*
-helferlein.com ( http://www.helferlein.com )
-Michael Tobisch
+dnnWerk.at ( https://www.dnnwerk.at )
+(C) Michael Tobisch 2009-2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -17,16 +17,15 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 */
 
+using DotNetNuke.Common.Utilities;
+using DotNetNuke.Entities.Modules;
+using DotNetNuke.Services.Localization;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web.UI.WebControls;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.Localization;
-using DotNetNuke.UI.UserControls;
 
-namespace helferlein.DNN.Modules.BabelFish.UI
+namespace helferlein.DNN.Modules.BabelFish.Controls
 {
    public partial class LocaleSelector : PortalModuleBase
    {
@@ -38,34 +37,34 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 #region Public Properties
       public string ProcessedLocale
       {
-         get { return this.processedLocale; }
+         get { return processedLocale; }
       }
 
       public string CurrentLocale
       {
-         get { return this.LocalesDropDownList.SelectedValue; }
+         get { return LocalesDropDownList.SelectedValue; }
       }
 
       public string CurrentLocaleName
       {
-         get { return this.LocalesDropDownList.SelectedItem.Text; }
+         get { return LocalesDropDownList.SelectedItem.Text; }
       }
 
       public ListItemCollection Items
       {
-         get { return this.LocalesDropDownList.Items; }
+         get { return LocalesDropDownList.Items; }
       }
 
       public bool DisabledLanguages
       {
-         get { return this.DisabledLocalesCheckBox.Checked; }
-         set { this.DisabledLocalesCheckBox.Checked = value; }
+         get { return DisabledLocalesCheckBox.Checked; }
+         set { DisabledLocalesCheckBox.Checked = value; }
       }
 
       public bool AutoSave
       {
-         get { return this.AutoSaveCheckBox.Checked; }
-         set { this.AutoSaveCheckBox.Checked = value; }
+         get { return AutoSaveCheckBox.Checked; }
+         set { AutoSaveCheckBox.Checked = value; }
       }
 
       public string ValidationGroup
@@ -74,7 +73,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI
          set
          {
             ViewState["ValidationGroup"] = value;
-            this.LocalesDropDownList.ValidationGroup = value;
+            LocalesDropDownList.ValidationGroup = value;
          }
       }
 
@@ -84,8 +83,8 @@ namespace helferlein.DNN.Modules.BabelFish.UI
          set
          {
             ViewState["ShowDisabledLocales"] = value;
-            this.DisabledLocalesCheckBox.Visible = value;
-            this.DisabledLocalesLabel.Visible = value;
+            DisabledLocalesCheckBox.Visible = value;
+            DisabledLocalesLabel.Visible = value;
          }
       }
 
@@ -95,8 +94,8 @@ namespace helferlein.DNN.Modules.BabelFish.UI
          set
          {
             ViewState["ShowAutoSave"] = value;
-            this.AutoSaveCheckBox.Visible = value;
-            this.AutoSaveLabel.Visible = value;
+            AutoSaveCheckBox.Visible = value;
+            AutoSaveLabel.Visible = value;
          }
       }
 
@@ -115,7 +114,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI
       {
          get
          {
-            return this.LocalesDropDownList.Items.Count;
+            return LocalesDropDownList.Items.Count;
          }
       }
 
@@ -158,18 +157,18 @@ namespace helferlein.DNN.Modules.BabelFish.UI
       {
          get
          {
-            object o = base.ViewState["LocaleList"];
+            object o = ViewState["LocaleList"];
             if (o == null)
             {
-               Dictionary<string, Locale> locales = this.LocaleController.GetLocales(this.DisabledLocalesCheckBox.Checked ? Null.NullInteger : base.PortalId);
+               Dictionary<string, Locale> locales = LocaleController.GetLocales(DisabledLocalesCheckBox.Checked ? Null.NullInteger : PortalId);
                Dictionary<string, string> localeList = new Dictionary<string, string>();
                foreach (KeyValuePair<string, Locale> locale in locales)
                {
                   localeList.Add(locale.Key, locale.Value.Text);
                }
-               base.ViewState["LocaleList"] = localeList;
+               ViewState["LocaleList"] = localeList;
             }
-            return (Dictionary<string, string>)base.ViewState["LocaleList"];
+            return (Dictionary<string, string>)ViewState["LocaleList"];
          }
       }
 
@@ -177,17 +176,17 @@ namespace helferlein.DNN.Modules.BabelFish.UI
       {
          get
          {
-            object o = base.ViewState["OnlyOneLanguageAvailable"];
+            object o = ViewState["OnlyOneLanguageAvailable"];
             bool result;
             if (o == null)
             {
-               result = (this.LocaleController.GetLocales(Null.NullInteger).Count == 1);
+               result = (LocaleController.GetLocales(Null.NullInteger).Count == 1);
             }
             else
             {
                result = Convert.ToBoolean(o);
             }
-            base.ViewState["OnlyOneLanguageAvailable"] = result;
+            ViewState["OnlyOneLanguageAvailable"] = result;
             return result;
          }
       }
@@ -196,110 +195,110 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 #region Event Handlers
       protected override void OnInit(EventArgs e)
       {
-         this.InitializeComponent();
-         base.OnInit(e);
+         InitializeComponent();
+         OnInit(e);
       }
 
       protected void Page_Init(object sender, EventArgs e)
       {
-         this.LocalResourceFile = base.ControlPath + "/App_LocalResources/CommonResources";
-         this.DisabledLocalesCheckBox.CheckedChanged += new EventHandler(this.DisabledLocalesCheckBox_CheckedChanged);
-         this.AutoSaveCheckBox.CheckedChanged += new EventHandler(this.AutoSaveCheckBox_CheckedChanged);
+         LocalResourceFile = ControlPath + "/App_LocalResources/CommonResources";
+         DisabledLocalesCheckBox.CheckedChanged += new EventHandler(DisabledLocalesCheckBox_CheckedChanged);
+         AutoSaveCheckBox.CheckedChanged += new EventHandler(AutoSaveCheckBox_CheckedChanged);
       }
 
       protected void Page_Load(object sender, EventArgs e)
       {
          if (!(Page.IsPostBack))
          {
-            this.BindLocalesDropDownList();
-            this.LocalesDropDownList.SelectedValue = CultureInfo.CurrentCulture.Name;
-            this.processedLocale = this.CurrentLocale;
-            if ((this.HideWhenOnlyOneLanguageIsAvailable) && (this.OnlyOneLanguageAvailable)) // (Localization.GetSupportedLocales().AllValues.Length == 1))
-               this.Visible = false;
+            BindLocalesDropDownList();
+            LocalesDropDownList.SelectedValue = CultureInfo.CurrentCulture.Name;
+            processedLocale = CurrentLocale;
+            if ((HideWhenOnlyOneLanguageIsAvailable) && (OnlyOneLanguageAvailable)) // (Localization.GetSupportedLocales().AllValues.Length == 1))
+               Visible = false;
          }
       }
 
       protected void LocalesDropDownList_SelectedIndexChanged(object sender, EventArgs e)
       {
-         this.OnSelectedIndexChanged(e);
-         this.processedLocale = this.CurrentLocale;
+         OnSelectedIndexChanged(e);
+         processedLocale = CurrentLocale;
       }
 
       protected void DisabledLocalesCheckBox_CheckedChanged(object sender, EventArgs e)
       {
-         base.ViewState.Remove("LocaleList");
-         this.BindLocalesDropDownList();
-         if (this.processedLocale != this.CurrentLocale)
+         ViewState.Remove("LocaleList");
+         BindLocalesDropDownList();
+         if (processedLocale != CurrentLocale)
          {
-            this.OnSelectedIndexChanged(e);
-            this.processedLocale = this.CurrentLocale;
+            OnSelectedIndexChanged(e);
+            processedLocale = CurrentLocale;
          }
       }
 
       protected void AutoSaveCheckBox_CheckedChanged(object sender, EventArgs e)
       {
          CheckBox autoSaveCheckBox = (CheckBox)sender;
-         this.LocalesDropDownList.CausesValidation = autoSaveCheckBox.Checked;
-         if (this.LocalesDropDownList.CausesValidation)
-            this.LocalesDropDownList.ValidationGroup = this.ValidationGroup;
+         LocalesDropDownList.CausesValidation = autoSaveCheckBox.Checked;
+         if (LocalesDropDownList.CausesValidation)
+            LocalesDropDownList.ValidationGroup = ValidationGroup;
       }
 #endregion
 
 #region Public Methods
       public void Reset()
       {
-         this.LocalesDropDownList.SelectedValue = base.PortalSettings.DefaultLanguage;
-         this.DisabledLocalesCheckBox.Checked = false;
-         this.AutoSaveCheckBox.Checked = false;
+         LocalesDropDownList.SelectedValue = PortalSettings.DefaultLanguage;
+         DisabledLocalesCheckBox.Checked = false;
+         AutoSaveCheckBox.Checked = false;
       }
 #endregion
 
 #region Private Methods
       private void InitializeComponent()
       {
-         this.LocalesDropDownList.SelectedIndexChanged += new EventHandler(LocalesDropDownList_SelectedIndexChanged);
-         this.Load += new EventHandler(this.Page_Load);
+         LocalesDropDownList.SelectedIndexChanged += new EventHandler(LocalesDropDownList_SelectedIndexChanged);
+         Load += new EventHandler(Page_Load);
       }
 
       private void OnSelectedIndexChanged(EventArgs e)
       {
-         this.CheckUpdateRequest(e);
-         if (this.SelectedIndexChanged != null)
-            this.SelectedIndexChanged(this, e);
+         CheckUpdateRequest(e);
+         if (SelectedIndexChanged != null)
+            SelectedIndexChanged(this, e);
       }
 
       private void BindLocalesDropDownList()
       {
-         this.LocalesDropDownList.DataSource = this.LocaleList;
-         this.LocalesDropDownList.DataTextField = "Value";
-         this.LocalesDropDownList.DataValueField = "Key";
-         this.LocalesDropDownList.DataBind();
+         LocalesDropDownList.DataSource = LocaleList;
+         LocalesDropDownList.DataTextField = "Value";
+         LocalesDropDownList.DataValueField = "Key";
+         LocalesDropDownList.DataBind();
          try
          {
-            this.LocalesDropDownList.SelectedValue = this.ProcessedLocale;
+            LocalesDropDownList.SelectedValue = ProcessedLocale;
          }
          catch
          {
-            this.LocalesDropDownList.SelectedValue = base.PortalSettings.DefaultLanguage;
+            LocalesDropDownList.SelectedValue = PortalSettings.DefaultLanguage;
          }
       }
 
       private void CheckUpdateRequest(EventArgs e)
       {
-         if ((this.AutoSaveCheckBox.Checked) && (this.UpdateRequested != null))
+         if ((AutoSaveCheckBox.Checked) && (UpdateRequested != null))
          {
             try
             {
-               this.UpdateRequested(this, e);
-               this.UpdateRequestImage.ImageUrl = "~/images/green-ok.gif";
-               this.UpdateRequestLabel.Text = String.Format(Localization.GetString("UpdateRequestLabel.Success.Text", LocalResourceFile), this.ProcessedLocale);
+               UpdateRequested(this, e);
+               UpdateRequestImage.ImageUrl = "~/images/green-ok.gif";
+               UpdateRequestLabel.Text = string.Format(Localization.GetString("UpdateRequestLabel.Success.Text", LocalResourceFile), ProcessedLocale);
             }
             catch (Exception ex)
             {
-               this.UpdateRequestImage.ImageUrl = "~/images/red-error.gif";
-               this.UpdateRequestLabel.Text = String.Format(Localization.GetString("UpdateRequestLabel.Failure.Text", LocalResourceFile), this.ProcessedLocale, ex.Message);
+               UpdateRequestImage.ImageUrl = "~/images/red-error.gif";
+               UpdateRequestLabel.Text = string.Format(Localization.GetString("UpdateRequestLabel.Failure.Text", LocalResourceFile), ProcessedLocale, ex.Message);
             }
-            this.UpdateRequestPanel.Visible = this.ShowUpdateRequestPanel;
+            UpdateRequestPanel.Visible = ShowUpdateRequestPanel;
          }
       }
 #endregion

@@ -1,6 +1,6 @@
 ﻿/*
-helferlein.com ( http://www.helferlein.com )
-Michael Tobisch
+dnnWerk.at ( https://www.dnnwerk.at )
+(C) Michael Tobisch 2009-2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -26,7 +26,7 @@ using DotNetNuke.Services.Localization;
 using System.Web.UI.WebControls;
 using System.Web.UI;
 
-namespace helferlein.DNN.Modules.BabelFish.UI
+namespace helferlein.DNN.Modules.BabelFish.Controls
 {
    public partial class BabelFishSelector : PortalModuleBase
    {
@@ -45,14 +45,14 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       public bool AutoPostBack
       {
-         get { return this.BabelFishList.AutoPostBack; }
-         set { this.BabelFishList.AutoPostBack = value; }
+         get { return BabelFishList.AutoPostBack; }
+         set { BabelFishList.AutoPostBack = value; }
       }
 
       public string CssClass
       {
-         get { return this.BabelFishList.CssClass; }
-         set { this.BabelFishList.CssClass = value; }
+         get { return BabelFishList.CssClass; }
+         set { BabelFishList.CssClass = value; }
       }
 
       public bool IncludeAll
@@ -81,24 +81,24 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       public int SelectedIndex
       {
-         get { return this.BabelFishList.SelectedIndex; }
-         set { this.BabelFishList.SelectedIndex = value; }
+         get { return BabelFishList.SelectedIndex; }
+         set { BabelFishList.SelectedIndex = value; }
       }
 
       public string SelectedValue
       {
-         get { return this.BabelFishList.SelectedValue; }
-         set { this.BabelFishList.SelectedValue = value; }
+         get { return BabelFishList.SelectedValue; }
+         set { BabelFishList.SelectedValue = value; }
       }
 
       public ListItem SelectedItem
       {
-         get { return this.BabelFishList.SelectedItem; }
+         get { return BabelFishList.SelectedItem; }
       }
 
       public ListItemCollection Items
       {
-         get { return this.BabelFishList.Items; }
+         get { return BabelFishList.Items; }
       }
 
       public string Filter
@@ -109,13 +109,13 @@ namespace helferlein.DNN.Modules.BabelFish.UI
 
       protected override void OnInit(EventArgs e)
       {
-         this.InitializeComponent();
-         base.OnInit(e);
+         InitializeComponent();
+         OnInit(e);
       }
 
       protected void Page_Init(object sender, EventArgs e)
       {
-         this.LocalResourceFile = base.ControlPath + "/App_LocalResources/CommonResources";
+         LocalResourceFile = ControlPath + "/App_LocalResources/CommonResources";
       }
 
       protected void Page_Load(object sender, EventArgs e)
@@ -123,26 +123,26 @@ namespace helferlein.DNN.Modules.BabelFish.UI
          if (!(Page.IsPostBack))
          {
             ListItem li;
-            if (this.IncludeSelect)
+            if (IncludeSelect)
             {
                li = new ListItem();
                li.Value = "";
                li.Text = Localization.GetString("Select.Text", LocalResourceFile);
-               this.BabelFishList.Items.Add(li);
+               BabelFishList.Items.Add(li);
             }
-            if (this.IncludeAll)
+            if (IncludeAll)
             {
                li = new ListItem();
                li.Value = "BABELFISH_SYSTEM_ITEM_ALL";
                li.Text = Localization.GetString("All.Text");
-               this.BabelFishList.Items.Add(li);
+               BabelFishList.Items.Add(li);
             }
-            List<BabelFishInfo> aquarium = this.BabelFishController.GetStrings(base.PortalId, CultureInfo.CurrentCulture.Name, this.Qualifier);
-            if (!(String.IsNullOrEmpty(this.Filter)))
+            List<BabelFishInfo> aquarium = BabelFishController.GetStrings(PortalId, CultureInfo.CurrentCulture.Name, Qualifier);
+            if (!(string.IsNullOrEmpty(Filter)))
             {
                List<string> filtervalues = new List<string>();
                List<BabelFishInfo> filteredFish = new List<BabelFishInfo>();
-               filtervalues.AddRange(this.Filter.Split(new char[] { ';' }));
+               filtervalues.AddRange(Filter.Split(new char[] { ';' }));
 
                foreach (BabelFishInfo fish in aquarium)
                {
@@ -152,35 +152,35 @@ namespace helferlein.DNN.Modules.BabelFish.UI
                aquarium = filteredFish;
             }
             aquarium.Sort(new BabelFishComparer().CompareByDisplayValue);
-            this.BabelFishList.DataSource = aquarium;
-            this.BabelFishList.DataTextField = "DisplayValue";
-            this.BabelFishList.DataValueField = "StringKey";
-            this.BabelFishList.DataBind();
-            this.SelectedValue = this.BabelFishList.SelectedValue;
-            if (this.IncludeOthers)
+            BabelFishList.DataSource = aquarium;
+            BabelFishList.DataTextField = "DisplayValue";
+            BabelFishList.DataValueField = "StringKey";
+            BabelFishList.DataBind();
+            SelectedValue = BabelFishList.SelectedValue;
+            if (IncludeOthers)
             {
                li = new ListItem();
                li.Value = "BABELFISH_SYSTEM_ITEM_OTHERS";
                li.Text = Localization.GetString("Others.Text", LocalResourceFile);
-               this.BabelFishList.Items.Add(li);
+               BabelFishList.Items.Add(li);
             }
          }
       }
 
       protected void BabelFishList_SelectedIndexChanged(object sender, EventArgs e)
       {
-         this.OnSelectedIndexChanged(e);
+         OnSelectedIndexChanged(e);
       }
 
       private void InitializeComponent()
       {
-         this.BabelFishList.SelectedIndexChanged += new EventHandler(this.BabelFishList_SelectedIndexChanged);
+         BabelFishList.SelectedIndexChanged += new EventHandler(BabelFishList_SelectedIndexChanged);
       }
 
       private void OnSelectedIndexChanged(EventArgs e)
       {
-         if (this.SelectedIndexChanged != null)
-            this.SelectedIndexChanged(this, e);
+         if (SelectedIndexChanged != null)
+            SelectedIndexChanged(this, e);
       }
 
    }

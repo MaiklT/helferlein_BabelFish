@@ -1,13 +1,13 @@
 ﻿//------------------------------------------------------------------------------
 // <automatisch generiert>
-//     Der Code wurde von einem Tool generiert.
+//     Dieser Code wurde von einem Tool generiert.
 //
-//     Änderungen an der Datei führen möglicherweise zu falschem Verhalten, und sie gehen verloren, wenn
-//     der Code erneut generiert wird.
+//     Änderungen an dieser Datei können fehlerhaftes Verhalten verursachen und gehen verloren, wenn
+//     der Code neu generiert wird.
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace helferlein.DNN.Modules.BabelFish.UI {
+namespace helferlein.DNN.Modules.BabelFish.Controls {
     
     
     public partial class KeyResourceEditor {
@@ -17,7 +17,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel GridPanel;
         
@@ -26,7 +26,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView KeyResourcesGrid;
         
@@ -35,7 +35,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.WebControls.CommandButton AddButton;
         
@@ -44,7 +44,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.WebControls.CommandButton BackButton;
         
@@ -53,7 +53,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel EditPanel;
         
@@ -62,7 +62,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.UserControls.LabelControl KeyLabel;
         
@@ -71,7 +71,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox KeyTextBox;
         
@@ -80,7 +80,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator KeyValidator;
         
@@ -89,7 +89,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image KeyRequiredImage;
         
@@ -98,7 +98,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.UserControls.LabelControl KeyResourceLabel;
         
@@ -107,7 +107,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox KeyResourceTextBox;
         
@@ -116,7 +116,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator KeyResourceValidator;
         
@@ -125,7 +125,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image KeyResourceRequiredImage;
         
@@ -134,7 +134,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel KeyResourceCommentPanel;
         
@@ -143,7 +143,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.UserControls.LabelControl KeyResourceCommentLabel;
         
@@ -152,7 +152,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox KeyResourceCommentTextBox;
         
@@ -161,7 +161,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.WebControls.CommandButton UpdateReturnButton;
         
@@ -170,7 +170,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.WebControls.CommandButton UpdateButton;
         
@@ -179,7 +179,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.WebControls.CommandButton CancelButton;
         
@@ -188,7 +188,7 @@ namespace helferlein.DNN.Modules.BabelFish.UI {
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
-        /// Um dies zu ändern, verschieben Sie die Felddeklaration aus der Designerdatei in eine Code-Behind-Datei.
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ValidationSummary KeyResourceValidationSummary;
     }

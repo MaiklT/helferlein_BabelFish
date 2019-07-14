@@ -1,6 +1,6 @@
 ﻿/*
-helferlein.com ( http://www.helferlein.com )
-Michael Tobisch
+dnnWerk.at ( https://www.dnnwerk.at )
+(C) Michael Tobisch 2009-2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -32,12 +32,12 @@ namespace helferlein.DNN.Modules.BabelFish.Business
 
       public BabelFishInfo(int portalID, string locale, string qualifier, string stringKey, string stringText, string stringComment)
       {
-         this.PortalID = portalID;
-         this.Locale = locale;
-         this.Qualifier = qualifier;
-         this.StringKey = stringKey;
-         this.StringText = stringText;
-         this.StringComment = stringComment;
+         PortalID = portalID;
+         Locale = locale;
+         Qualifier = qualifier;
+         StringKey = stringKey;
+         StringText = stringText;
+         StringComment = stringComment;
       }
 #endregion
 
@@ -54,28 +54,28 @@ namespace helferlein.DNN.Modules.BabelFish.Business
 
       public string DisplayValue
       {
-         get { return (String.IsNullOrEmpty(this.StringText) ? this.FallBack : this.StringText); }
+         get { return (string.IsNullOrEmpty(StringText) ? FallBack : StringText); }
       }
 #endregion
 
 #region IHydratable Member
       public void Fill(IDataReader dr)
       {
-         this.PortalID = Convert.ToInt32(dr["PortalID"]);
-         this.ID = Convert.ToInt32(dr["ID"]);
-         this.Locale = Convert.ToString(dr["Locale"]);
-         this.Qualifier = Convert.ToString(dr["Qualifier"]);
-         this.StringKey = Convert.ToString(dr["StringKey"]);
-         this.StringText = Convert.ToString(Null.SetNull(dr["StringText"], this.StringText));
-         this.StringComment = Convert.ToString(Null.SetNull(dr["StringComment"], this.StringComment));
-         this.FallBack = Convert.ToString(Null.SetNull(dr["FallBack"], this.FallBack));
-         this.FallBackComment = Convert.ToString(Null.SetNull(dr["FallBackComment"], this.FallBackComment));
+         PortalID = Convert.ToInt32(dr["PortalID"]);
+         ID = Convert.ToInt32(dr["ID"]);
+         Locale = Convert.ToString(dr["Locale"]);
+         Qualifier = Convert.ToString(dr["Qualifier"]);
+         StringKey = Convert.ToString(dr["StringKey"]);
+         StringText = Convert.ToString(Null.SetNull(dr["StringText"], StringText));
+         StringComment = Convert.ToString(Null.SetNull(dr["StringComment"], StringComment));
+         FallBack = Convert.ToString(Null.SetNull(dr["FallBack"], FallBack));
+         FallBackComment = Convert.ToString(Null.SetNull(dr["FallBackComment"], FallBackComment));
       }
 
       public int KeyID
       {
-         get { return this.ID; }
-         set { this.ID = value; }
+         get { return ID; }
+         set { ID = value; }
       }
 #endregion
    }

@@ -1,6 +1,6 @@
 ﻿/*
-helferlein.com ( http://www.helferlein.com )
-Michael Tobisch
+dnnWerk.at ( https://www.dnnwerk.at )
+(C) Michael Tobisch 2009-2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -50,7 +50,7 @@ namespace helferlein.DNN.Modules.BabelFish.Data
 #region Private Methods
       private string GetFullyQualifiedName(string objectName)
       {
-         return this.DatabaseOwner + this.ObjectQualifier + BabelfishBase.SP_QUALIFIER + objectName;
+         return DatabaseOwner + ObjectQualifier + BabelfishBase.SP_QUALIFIER + objectName;
       }
 
       private object GetNull(object field)
@@ -115,92 +115,92 @@ namespace helferlein.DNN.Modules.BabelFish.Data
 #region BabelFish Methods
       public override IDataReader GetQualifiers(int portalID)
       {
-         return (IDataReader)SqlHelper.ExecuteReader(this.ConnectionString, this.GetFullyQualifiedName("GetQualifiers"), new object[] { portalID });
+         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetQualifiers"), new object[] { portalID });
       }
 
       public override IDataReader GetString(int ID)
       {
-         return (IDataReader)SqlHelper.ExecuteReader(this.ConnectionString, this.GetFullyQualifiedName("GetStringByID"), new object[] { ID });
+         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetStringByID"), new object[] { ID });
       }
 
       public override IDataReader GetString(int portalID, string locale, string qualifier, string stringKey, string fallBackLocale)
       {
-         return (IDataReader)SqlHelper.ExecuteReader(this.ConnectionString, this.GetFullyQualifiedName("GetString"), new object[] { portalID, locale, qualifier, stringKey, fallBackLocale });
+         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetString"), new object[] { portalID, locale, qualifier, stringKey, fallBackLocale });
       }
 
       public override IDataReader GetStrings(int portalID, string locale, string qualifier, string fallBackLocale)
       {
-         return (IDataReader)SqlHelper.ExecuteReader(this.ConnectionString, this.GetFullyQualifiedName("GetStrings"), new object[] { portalID, locale, qualifier, fallBackLocale });
+         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetStrings"), new object[] { portalID, locale, qualifier, fallBackLocale });
       }
 
       public override IDataReader GetStrings(int portalID, string qualifier, string fallBackLocale)
       {
-         return (IDataReader)SqlHelper.ExecuteReader(this.ConnectionString, this.GetFullyQualifiedName("GetStringsByQualifier"), new object[] { portalID, qualifier, fallBackLocale });
+         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetStringsByQualifier"), new object[] { portalID, qualifier, fallBackLocale });
       }
 
       public override IDataReader GetStringsByKey(int portalID, string qualifier, string stringKey, string fallBackLocale)
       {
-         return (IDataReader)SqlHelper.ExecuteReader(this.ConnectionString, this.GetFullyQualifiedName("GetStringsByQualifierAndStringKey"), new object[] { portalID, qualifier, stringKey, fallBackLocale });
+         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetStringsByQualifierAndStringKey"), new object[] { portalID, qualifier, stringKey, fallBackLocale });
       }
 
       public override IDataReader GetNonFallBackStrings(int portalID, string qualifier, string stringKey, string fallBackLocale)
       {
-         return (IDataReader)SqlHelper.ExecuteReader(this.ConnectionString, this.GetFullyQualifiedName("GetNonFallBackStrings"), new object[] { portalID, qualifier, stringKey, fallBackLocale });
+         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetNonFallBackStrings"), new object[] { portalID, qualifier, stringKey, fallBackLocale });
       }
 
       public override int InsertString(int portalID, string locale, string qualifier, string stringKey, string stringText, string stringComment)
       {
-         return Convert.ToInt32(SqlHelper.ExecuteScalar(this.ConnectionString, this.GetFullyQualifiedName("InsertString"), new object[] { portalID, locale, qualifier, stringKey, this.GetNull(stringText), this.GetNull(stringComment) }));
+         return Convert.ToInt32(SqlHelper.ExecuteScalar(ConnectionString, GetFullyQualifiedName("InsertString"), new object[] { portalID, locale, qualifier, stringKey, GetNull(stringText), GetNull(stringComment) }));
       }
 
       public override int UpdateString(int ID, string stringText, string stringComment)
       {
-         return Convert.ToInt32(SqlHelper.ExecuteScalar(this.ConnectionString, this.GetFullyQualifiedName("UpdateStringByID"), new object[] { ID, this.GetNull(stringText), this.GetNull(stringComment) }));
+         return Convert.ToInt32(SqlHelper.ExecuteScalar(ConnectionString, GetFullyQualifiedName("UpdateStringByID"), new object[] { ID, GetNull(stringText), GetNull(stringComment) }));
       }
 
       public override int UpdateString(int portalID, string locale, string qualifier, string stringKey, string stringText, string stringComment)
       {
-         return Convert.ToInt32(SqlHelper.ExecuteScalar(this.ConnectionString, this.GetFullyQualifiedName("UpdateString"), new object[] { portalID, locale, qualifier, stringKey, this.GetNull(stringText), this.GetNull(stringComment) }));
+         return Convert.ToInt32(SqlHelper.ExecuteScalar(ConnectionString, GetFullyQualifiedName("UpdateString"), new object[] { portalID, locale, qualifier, stringKey, GetNull(stringText), GetNull(stringComment) }));
       }
 
       public override int UpdateStrings(string aquarium)
       {
-         return Convert.ToInt32(SqlHelper.ExecuteScalar(this.ConnectionString, this.GetFullyQualifiedName("UpdateStrings"), new object[] { aquarium }));
+         return Convert.ToInt32(SqlHelper.ExecuteScalar(ConnectionString, GetFullyQualifiedName("UpdateStrings"), new object[] { aquarium }));
       }
 
       public override void DeleteString(int ID)
       {
-         SqlHelper.ExecuteNonQuery(this.ConnectionString, this.GetFullyQualifiedName("DeleteString"), new object[] { ID });
+         SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("DeleteString"), new object[] { ID });
       }
 
       public override void DeleteStringKey(int portalID, string qualifier, string stringKey)
       {
-         SqlHelper.ExecuteNonQuery(this.ConnectionString, this.GetFullyQualifiedName("DeleteStringKey"), new object[] { portalID, qualifier, stringKey });
+         SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("DeleteStringKey"), new object[] { portalID, qualifier, stringKey });
       }
 
       public override void DeleteLocale(int portalID, string locale)
       {
-         SqlHelper.ExecuteNonQuery(this.ConnectionString, this.GetFullyQualifiedName("DeleteLocale"), new object[] { portalID, locale });
+         SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("DeleteLocale"), new object[] { portalID, locale });
       }
 
       public override void DeletePortal(int portalID)
       {
-         SqlHelper.ExecuteNonQuery(this.ConnectionString, this.GetFullyQualifiedName("DeletePortal"), new object[] { portalID });
+         SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("DeletePortal"), new object[] { portalID });
       }
 
       public override void DeleteQualifier(int portalID, string qualifier)
       {
-         SqlHelper.ExecuteNonQuery(this.ConnectionString, this.GetFullyQualifiedName("DeleteQualifier"), new object[] { portalID, qualifier });
+         SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("DeleteQualifier"), new object[] { portalID, qualifier });
       }
 
       public override void CopyQualifier(int sourcePortalID, int targetPortalID, string qualifier)
       {
-         SqlHelper.ExecuteNonQuery(this.ConnectionString, this.GetFullyQualifiedName("CopyQualifier"), new object[] { sourcePortalID, targetPortalID, qualifier });
+         SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("CopyQualifier"), new object[] { sourcePortalID, targetPortalID, qualifier });
       }
 
       public override void CopyQualifier(int sourcePortalID, int targetPortalID, string locale, string qualifier)
       {
-         SqlHelper.ExecuteNonQuery(this.ConnectionString, this.GetFullyQualifiedName("CopyQualifierByLocale"), new object[] { sourcePortalID, targetPortalID, locale, qualifier });
+         SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("CopyQualifierByLocale"), new object[] { sourcePortalID, targetPortalID, locale, qualifier });
       }
 #endregion
    }
