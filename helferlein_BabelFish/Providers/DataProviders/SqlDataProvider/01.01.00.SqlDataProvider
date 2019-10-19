@@ -1,3 +1,12 @@
+/*
+ * SqlDataProvider for helferlein_BabelFish
+ * Version 01.01.00
+ * dnnWerk.at ( https://www.dnnwerk.at )
+ * (C) Michael Tobisch 2009-2019
+ *
+ * Note: To manually execute this script you must  perform a search and replace operation for {databaseOwner} and {objectQualifier}
+ */
+
 ALTER TABLE {databaseOwner}{objectQualifier}helferlein_BabelFish
    ADD StringComment nvarchar(MAX) NULL
 GO

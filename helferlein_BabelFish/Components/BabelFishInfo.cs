@@ -16,18 +16,38 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABI
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 DEALINGS IN THE SOFTWARE.
 */
-using DotNetNuke.Entities.Modules;
-using System.Data;
-using System;
-using DotNetNuke.Common.Utilities;
-using System.Collections;
-using System.Collections.Generic;
+
+using DotNetNuke.ComponentModel.DataAnnotations;
+using System.Web.Caching;
 
 namespace helferlein.DNN.Modules.BabelFish.Business
 {
-   public class BabelFishInfo : IHydratable
+   [TableName("helferlein_BabelFish")]
+   [PrimaryKey("ID", AutoIncrement = true)]
+   [Scope("PortalID")]
+   [Cacheable("BabelFish", CacheItemPriority.Normal, 20)]
+   public class BabelFishInfo
    {
-#region Constructors
+      #region Public Properties
+      public int PortalID { get; set; }
+      public int ID { get; set; }
+      public string Locale { get; set; }
+      public string Qualifier { get; set; }
+      public string StringKey { get; set; }
+      public string StringText { get; set; }
+      public string StringComment { get; set; }
+      [IgnoreColumn]
+      public string FallBack { get; set; }
+      [IgnoreColumn]
+      public string FallBackComment { get; set; }
+      [IgnoreColumn]
+      public string DisplayValue
+      {
+         get { return (string.IsNullOrEmpty(StringText) ? FallBack : StringText); }
+      }
+      #endregion
+
+      #region Constructors
       public BabelFishInfo() { }
 
       public BabelFishInfo(int portalID, string locale, string qualifier, string stringKey, string stringText, string stringComment)
@@ -39,62 +59,6 @@ namespace helferlein.DNN.Modules.BabelFish.Business
          StringText = stringText;
          StringComment = stringComment;
       }
-#endregion
-
-#region Public Properties
-      public int PortalID { get; set; }
-      public int ID { get; set; }
-      public string Locale { get; set; }
-      public string Qualifier { get; set; }
-      public string StringKey { get; set; }
-      public string StringText { get; set; }
-      public string StringComment { get; set; }
-      public string FallBack { get; set; }
-      public string FallBackComment { get; set; }
-
-      public string DisplayValue
-      {
-         get { return (string.IsNullOrEmpty(StringText) ? FallBack : StringText); }
-      }
-#endregion
-
-#region IHydratable Member
-      public void Fill(IDataReader dr)
-      {
-         PortalID = Convert.ToInt32(dr["PortalID"]);
-         ID = Convert.ToInt32(dr["ID"]);
-         Locale = Convert.ToString(dr["Locale"]);
-         Qualifier = Convert.ToString(dr["Qualifier"]);
-         StringKey = Convert.ToString(dr["StringKey"]);
-         StringText = Convert.ToString(Null.SetNull(dr["StringText"], StringText));
-         StringComment = Convert.ToString(Null.SetNull(dr["StringComment"], StringComment));
-         FallBack = Convert.ToString(Null.SetNull(dr["FallBack"], FallBack));
-         FallBackComment = Convert.ToString(Null.SetNull(dr["FallBackComment"], FallBackComment));
-      }
-
-      public int KeyID
-      {
-         get { return ID; }
-         set { ID = value; }
-      }
-#endregion
    }
-
-   public class BabelFishComparer : IComparer<BabelFishInfo>
-   {
-      public int Compare(BabelFishInfo x, BabelFishInfo y)
-      {
-         return x.ID.CompareTo(y.ID);
-      }
-
-      public int CompareByDisplayValue(BabelFishInfo x, BabelFishInfo y)
-      {
-         return x.DisplayValue.CompareTo(y.DisplayValue);
-      }
-
-      public int CompareByStringKey(BabelFishInfo x, BabelFishInfo y)
-      {
-         return x.StringKey.CompareTo(y.StringKey);
-      }
-   }
+#endregion
 }

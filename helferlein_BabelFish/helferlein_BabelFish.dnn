@@ -13,6 +13,7 @@
          <releaseNotes src="Documentation\ReleaseNotes.html" />
          <dependencies>
             <dependency type="CoreVersion">09.00.00</dependency>
+            <dependency type="Type">System.Data.SqlClient.SqlColumnEncryptionEnclaveProvider</dependency>
          </dependencies>
          <components>
             <component type="Cleanup" version="01.00.03">

@@ -32,10 +32,6 @@ namespace helferlein.DNN.Modules.BabelFish.Data
       }
 #region BabelFish Methods
       public abstract IDataReader GetQualifiers(int portalID);
-      public abstract IDataReader GetString(int ID);
-      public abstract IDataReader GetString(int portalID, string locale, string qualifier, string stringKey, string fallBackLocale);
-      public abstract IDataReader GetStrings(int portalID, string locale, string qualifier, string fallBackLocale);
-      public abstract IDataReader GetStrings(int portalID, string qualifier, string fallBackLocale);
       public abstract IDataReader GetStringsByKey(int portalID, string qualifier, string stringKey, string fallBackLocale);
       public abstract IDataReader GetNonFallBackStrings(int portalID, string qualifier, string stringKey, string fallBackLocale);
       public abstract int InsertString(int portalID, string locale, string qualifier, string stringKey, string stringText, string stringComment);

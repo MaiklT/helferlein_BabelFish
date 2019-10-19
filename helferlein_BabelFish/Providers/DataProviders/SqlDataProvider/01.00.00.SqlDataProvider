@@ -1,3 +1,12 @@
+/*
+ * SqlDataProvider for helferlein_BabelFish
+ * Version 01.00.00
+ * dnnWerk.at ( https://www.dnnwerk.at )
+ * (C) Michael Tobisch 2009-2019
+ *
+ * Note: To manually execute this script you must  perform a search and replace operation for {databaseOwner} and {objectQualifier}
+ */
+
 -- DROP STORED PROCEDURES
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_CopyQualifier') AND type in (N'P', N'PC'))
    DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_CopyQualifier

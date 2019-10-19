@@ -83,8 +83,7 @@ namespace helferlein.DNN.Modules.BabelFish.Controls
          set
          {
             ViewState["ShowDisabledLocales"] = value;
-            DisabledLocalesCheckBox.Visible = value;
-            DisabledLocalesLabel.Visible = value;
+            DisabledLocalesPanel.Visible = value;
          }
       }
 
@@ -94,8 +93,7 @@ namespace helferlein.DNN.Modules.BabelFish.Controls
          set
          {
             ViewState["ShowAutoSave"] = value;
-            AutoSaveCheckBox.Visible = value;
-            AutoSaveLabel.Visible = value;
+            AutoSavePanel.Visible = value;
          }
       }
 
@@ -196,12 +194,12 @@ namespace helferlein.DNN.Modules.BabelFish.Controls
       protected override void OnInit(EventArgs e)
       {
          InitializeComponent();
-         OnInit(e);
+         base.OnInit(e);
       }
 
       protected void Page_Init(object sender, EventArgs e)
       {
-         LocalResourceFile = ControlPath + "/App_LocalResources/CommonResources";
+         LocalResourceFile = string.Format("/DesktopModules/{0}/{1}/{2}", DesktopModuleController.GetDesktopModuleByFriendlyName("helferlein BabelFish").FolderName, "App_LocalResources", "SharedResources");
          DisabledLocalesCheckBox.CheckedChanged += new EventHandler(DisabledLocalesCheckBox_CheckedChanged);
          AutoSaveCheckBox.CheckedChanged += new EventHandler(AutoSaveCheckBox_CheckedChanged);
       }
@@ -248,7 +246,7 @@ namespace helferlein.DNN.Modules.BabelFish.Controls
       public void Reset()
       {
          LocalesDropDownList.SelectedValue = PortalSettings.DefaultLanguage;
-         DisabledLocalesCheckBox.Checked = false;
+         DisabledLocalesCheckBox.Checked = ShowDisabledLocales;
          AutoSaveCheckBox.Checked = false;
       }
 #endregion

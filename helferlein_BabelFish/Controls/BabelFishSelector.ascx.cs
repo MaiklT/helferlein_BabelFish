@@ -107,15 +107,21 @@ namespace helferlein.DNN.Modules.BabelFish.Controls
          set { ViewState["Filter"] = value; }
       }
 
+      public bool IsTest
+      {
+         get {  return Convert.ToBoolean(ViewState["IsTest"]); }
+         set { ViewState["IsTest"] = value; }
+      }
+
       protected override void OnInit(EventArgs e)
       {
          InitializeComponent();
-         OnInit(e);
+         base.OnInit(e);
       }
 
       protected void Page_Init(object sender, EventArgs e)
       {
-         LocalResourceFile = ControlPath + "/App_LocalResources/CommonResources";
+         LocalResourceFile = string.Format("/DesktopModules/{0}/{1}/{2}", DesktopModuleController.GetDesktopModuleByFriendlyName("helferlein BabelFish").FolderName, "App_LocalResources", "SharedResources");
       }
 
       protected void Page_Load(object sender, EventArgs e)
@@ -137,7 +143,39 @@ namespace helferlein.DNN.Modules.BabelFish.Controls
                li.Text = Localization.GetString("All.Text");
                BabelFishList.Items.Add(li);
             }
-            List<BabelFishInfo> aquarium = BabelFishController.GetStrings(PortalId, CultureInfo.CurrentCulture.Name, Qualifier);
+
+            List<BabelFishInfo> aquarium;
+            if (IsTest)
+            {
+               if (CultureInfo.CurrentCulture.Name == "de-AT")
+               {
+                  aquarium = new List<BabelFishInfo>() {
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemOne", "Element Eins", string.Empty),
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemTwo", "Element Zwei", string.Empty),
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemThree", "Element Drei", string.Empty)
+                  };
+               }
+               else if (CultureInfo.CurrentCulture.Name == "fr-FR")
+               {
+                  aquarium = new List<BabelFishInfo>() {
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemOne", "Élément Un", string.Empty),
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemTwo", "Élément Deux", string.Empty),
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemThree", "Élément Trois", string.Empty)
+                  };
+               }
+               else
+               {
+                  aquarium = new List<BabelFishInfo>() {
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemOne", "Item One", string.Empty),
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemTwo", "Item Two", string.Empty),
+                     new BabelFishInfo(PortalId, CultureInfo.CurrentCulture.Name, "Test", "ItemThree", "Item Three", string.Empty)
+                  };
+               }
+            }
+            else
+            {
+               aquarium = BabelFishController.GetStrings(PortalId, CultureInfo.CurrentCulture.Name, Qualifier);
+            }
             if (!(string.IsNullOrEmpty(Filter)))
             {
                List<string> filtervalues = new List<string>();

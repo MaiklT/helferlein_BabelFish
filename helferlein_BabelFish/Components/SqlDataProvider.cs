@@ -16,12 +16,12 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABI
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 DEALINGS IN THE SOFTWARE.
 */
-using DotNetNuke.Framework.Providers;
+
 using DotNetNuke.Common.Utilities;
-using System;
-using System.Configuration;
-using System.Data;
+using DotNetNuke.Framework.Providers;
 using Microsoft.ApplicationBlocks.Data;
+using System;
+using System.Data;
 
 namespace helferlein.DNN.Modules.BabelFish.Data
 {
@@ -118,26 +118,6 @@ namespace helferlein.DNN.Modules.BabelFish.Data
          return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetQualifiers"), new object[] { portalID });
       }
 
-      public override IDataReader GetString(int ID)
-      {
-         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetStringByID"), new object[] { ID });
-      }
-
-      public override IDataReader GetString(int portalID, string locale, string qualifier, string stringKey, string fallBackLocale)
-      {
-         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetString"), new object[] { portalID, locale, qualifier, stringKey, fallBackLocale });
-      }
-
-      public override IDataReader GetStrings(int portalID, string locale, string qualifier, string fallBackLocale)
-      {
-         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetStrings"), new object[] { portalID, locale, qualifier, fallBackLocale });
-      }
-
-      public override IDataReader GetStrings(int portalID, string qualifier, string fallBackLocale)
-      {
-         return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetStringsByQualifier"), new object[] { portalID, qualifier, fallBackLocale });
-      }
-
       public override IDataReader GetStringsByKey(int portalID, string qualifier, string stringKey, string fallBackLocale)
       {
          return (IDataReader)SqlHelper.ExecuteReader(ConnectionString, GetFullyQualifiedName("GetStringsByQualifierAndStringKey"), new object[] { portalID, qualifier, stringKey, fallBackLocale });
@@ -187,7 +167,9 @@ namespace helferlein.DNN.Modules.BabelFish.Data
       {
          SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("DeletePortal"), new object[] { portalID });
       }
+#endregion
 
+#region Qualifier Methods
       public override void DeleteQualifier(int portalID, string qualifier)
       {
          SqlHelper.ExecuteNonQuery(ConnectionString, GetFullyQualifiedName("DeleteQualifier"), new object[] { portalID, qualifier });

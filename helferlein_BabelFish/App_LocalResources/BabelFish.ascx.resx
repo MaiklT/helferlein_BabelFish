@@ -120,4 +120,19 @@
   <data name="BabelFishLabel.Text" xml:space="preserve">
     <value>This module represents the helferlein_BabelFish Core API. The Core API itself has no GUI features.</value>
   </data>
+  <data name="BabelFishMultiSelector.Help" xml:space="preserve">
+    <value>Select values</value>
+  </data>
+  <data name="BabelFishMultiSelector.Text" xml:space="preserve">
+    <value>BabelFish MultiSelector</value>
+  </data>
+  <data name="BabelFishSelector.Help" xml:space="preserve">
+    <value>Select a value</value>
+  </data>
+  <data name="BabelFishSelector.Text" xml:space="preserve">
+    <value>BabelFish Selector</value>
+  </data>
+  <data name="TestFormHeader.Text" xml:space="preserve">
+    <value>Test Form</value>
+  </data>
 </root>

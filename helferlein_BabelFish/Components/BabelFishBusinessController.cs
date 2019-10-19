@@ -18,17 +18,20 @@ DEALINGS IN THE SOFTWARE.
 */
 
 using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.Localization;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace helferlein.DNN.Modules.BabelFish.UI
+namespace helferlein.DNN.Modules.BabelFish.Business
 {
-   public partial class BabelFish : PortalModuleBase
+   public class BabelFishBusinessController : IUpgradeable
    {
-      protected void Page_Load(object sender, EventArgs e)
+#region IUpgradeable Member
+      public string UpgradeModule(string version)
       {
-         BabelFishLabel.Text = Localization.GetString("BabelFishLabel.Text", LocalResourceFile);
-         TestForm.Visible = IsEditable;
+         return string.Format("Upgrading to version {0}", version);
       }
+#endregion
    }
 }

@@ -1,0 +1,14 @@
+/*
+ * SqlDataProvider for helferlein_BabelFish
+ * Version 09.00.00
+ * dnnWerk.at ( https://www.dnnwerk.at )
+ * (C) Michael Tobisch 2009-2019
+ *
+ * Note: To manually execute this script you must  perform a search and replace operation for {databaseOwner} and {objectQualifier}
+ */
+
+-- Drop Stored Procedures not needed anymore due to use of DAL2
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID('{databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringById') AND type in (N'P', N'PC'))
+   DROP PROCEDURE {databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringById
+GO
+

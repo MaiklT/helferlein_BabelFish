@@ -251,7 +251,7 @@ namespace helferlein.DNN.Modules.BabelFish.Controls
 
       private void BindGrid()
       {
-         List<BabelFishInfo> keys = BabelFishController.GetStrings(PortalId, CultureInfo.CurrentCulture.Name, BabelFishQualifier, false);
+         List<BabelFishInfo> keys = BabelFishController.GetStrings(PortalId, CultureInfo.CurrentCulture.Name, BabelFishQualifier);
 
          DataTable values = new DataTable();
          DataColumn keyColumn = new DataColumn("StringKey", typeof(string));

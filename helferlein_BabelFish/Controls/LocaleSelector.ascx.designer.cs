@@ -58,13 +58,13 @@ namespace helferlein.DNN.Modules.BabelFish.Controls {
         protected global::System.Web.UI.WebControls.DropDownList LocalesDropDownList;
         
         /// <summary>
-        /// DisabledLocalesCheckBox-Steuerelement
+        /// DisabledLocalesPanel-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox DisabledLocalesCheckBox;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DisabledLocalesPanel;
         
         /// <summary>
         /// DisabledLocalesLabel-Steuerelement
@@ -76,13 +76,22 @@ namespace helferlein.DNN.Modules.BabelFish.Controls {
         protected global::DotNetNuke.UI.UserControls.LabelControl DisabledLocalesLabel;
         
         /// <summary>
-        /// AutoSaveCheckBox-Steuerelement
+        /// DisabledLocalesCheckBox-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox AutoSaveCheckBox;
+        protected global::System.Web.UI.WebControls.CheckBox DisabledLocalesCheckBox;
+        
+        /// <summary>
+        /// AutoSavePanel-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AutoSavePanel;
         
         /// <summary>
         /// AutoSaveLabel-Steuerelement
@@ -92,5 +101,14 @@ namespace helferlein.DNN.Modules.BabelFish.Controls {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::DotNetNuke.UI.UserControls.LabelControl AutoSaveLabel;
+        
+        /// <summary>
+        /// AutoSaveCheckBox-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox AutoSaveCheckBox;
     }
 }

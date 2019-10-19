@@ -17,18 +17,25 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 */
 
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.Localization;
-using System;
+using System.Collections.Generic;
 
-namespace helferlein.DNN.Modules.BabelFish.UI
+namespace helferlein.DNN.Modules.BabelFish.Business
 {
-   public partial class BabelFish : PortalModuleBase
+   public class BabelFishComparer : IComparer<BabelFishInfo>
    {
-      protected void Page_Load(object sender, EventArgs e)
+      public int Compare(BabelFishInfo x, BabelFishInfo y)
       {
-         BabelFishLabel.Text = Localization.GetString("BabelFishLabel.Text", LocalResourceFile);
-         TestForm.Visible = IsEditable;
+         return x.ID.CompareTo(y.ID);
+      }
+
+      public int CompareByDisplayValue(BabelFishInfo x, BabelFishInfo y)
+      {
+         return x.DisplayValue.CompareTo(y.DisplayValue);
+      }
+
+      public int CompareByStringKey(BabelFishInfo x, BabelFishInfo y)
+      {
+         return x.StringKey.CompareTo(y.StringKey);
       }
    }
 }

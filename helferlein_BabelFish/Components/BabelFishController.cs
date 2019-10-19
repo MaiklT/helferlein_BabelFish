@@ -16,6 +16,7 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABI
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 DEALINGS IN THE SOFTWARE.
 */
+
 using DotNetNuke.Common.Utilities;
 using helferlein.DNN.Modules.BabelFish.Data;
 using System.Collections.Generic;
@@ -24,10 +25,13 @@ using DotNetNuke.Entities.Modules;
 using System.Web;
 using DotNetNuke.Entities.Portals;
 using System.Text;
+using DotNetNuke.Data;
+using DataProvider = helferlein.DNN.Modules.BabelFish.Data.DataProvider;
+using System.Data;
 
 namespace helferlein.DNN.Modules.BabelFish.Business
 {
-   public class BabelFishController : IUpgradeable
+   public class BabelFishController
    {
       /// <summary>
       /// Gets the fallback locale (which is the portal's default language)
@@ -36,153 +40,59 @@ namespace helferlein.DNN.Modules.BabelFish.Business
       {
          get { return PortalController.Instance.GetCurrentPortalSettings().DefaultLanguage; }
       }
-
+#region Data Access
       /// <summary>
       /// Gets a BabelFishInfo object by it's ID
       /// </summary>
       /// <param name="ID">The ID of the BabelFishInfo object</param>
       /// <returns>BabelFishInfo object from the database (not cached)</returns>
-      public BabelFishInfo GetString(int ID)
+      public BabelFishInfo GetString(int id)
       {
-         return GetString(ID, true);
-      }
-
-      /// <summary>
-      /// Gets a BabelFishInfo object by it's ID, optionally from Cache
-      /// </summary>
-      /// <param name="ID">The ID of the BabelFishInfo object</param>
-      /// <param name="fromCache">Use cache</param>
-      /// <returns>BabelFishInfo object from the database or cache</returns>
-      /// <remarks>If the BabelFishInfo comes from the database, it will be written to the cache anyway</remarks>
-      public BabelFishInfo GetString(int ID, bool fromCache)
-      {
-         string cacheKey = BabelfishBase.BABELFISH + BabelfishBase.SEPERATOR + "ID" + BabelfishBase.SEPERATOR + ID.ToString();
-
-         if (fromCache)
+         BabelFishInfo babelFish;
+         using (IDataContext ctx = DataContext.Instance())
          {
-            if (DataCache.GetCache(cacheKey) != null)
-               // Object was found in the cache
-               return (BabelFishInfo)DataCache.GetCache(cacheKey);
-            else
-            {
-               // read it from the database and cache it
-               BabelFishInfo fish = (BabelFishInfo)CBO.FillObject<BabelFishInfo>(DataProvider.Instance().GetString(ID));
-               if (fish != null)
-                  BabelFishUtils.FishToCache(fish);
-               return fish;
-            }
+            var rep = ctx.GetRepository<BabelFishInfo>();
+            babelFish = rep.GetById(id);
          }
-         else
-         {
-            // read it from the database and cache it
-            BabelFishInfo fish = (BabelFishInfo)CBO.FillObject<BabelFishInfo>(DataProvider.Instance().GetString(ID));
-            if (fish != null)
-               BabelFishUtils.FishToCache(fish);
-            return fish;
-         }
+         return babelFish;
       }
 
       public BabelFishInfo GetString(int portalID, string locale, string qualifier, string stringKey)
       {
-         return GetString(portalID, locale, qualifier, stringKey, true);
-      }
-
-      public BabelFishInfo GetString(int portalID, string locale, string qualifier, string stringKey, bool fromCache)
-      {
-         string cacheKey = BabelfishBase.BABELFISH + BabelfishBase.SEPERATOR + "PortalID" + portalID + 
-                           BabelfishBase.SEPERATOR + "Locale" + BabelfishBase.SEPERATOR + locale +
-                           BabelfishBase.SEPERATOR + "Qualifier" + BabelfishBase.SEPERATOR + qualifier +
-                           BabelfishBase.SEPERATOR + "StringKey" + BabelfishBase.SEPERATOR + stringKey;
-
-         if (fromCache)
+         BabelFishInfo babelFish;
+         using (IDataContext ctx = DataContext.Instance())
          {
-            if (DataCache.GetCache(cacheKey) != null)
-               // Object was found in the cache
-               return (BabelFishInfo)DataCache.GetCache(cacheKey);
-            else
-            {
-               // read it from the database and cache it
-               BabelFishInfo fish = CBO.FillObject<BabelFishInfo>(DataProvider.Instance().GetString(portalID, locale, qualifier, stringKey, FallBackLocale));
-               if (fish != null)
-                  BabelFishUtils.FishToCache(fish);
-               return fish;
-            }
+            babelFish = (BabelFishInfo)ctx.ExecuteQuery<BabelFishInfo>(CommandType.StoredProcedure,
+               "{databaseOwner}{objectQualifier}helferlein_BabelFish_GetString",
+               new object[] { portalID, locale, qualifier, stringKey, FallBackLocale });
          }
-         else
-         {
-            // read it from the database and cache it
-            BabelFishInfo fish = CBO.FillObject<BabelFishInfo>(DataProvider.Instance().GetString(portalID, locale, qualifier, stringKey, FallBackLocale));
-            if (fish != null)
-               BabelFishUtils.FishToCache(fish);
-            return fish;
-         }
+         return babelFish;
       }
 
       public List<BabelFishInfo> GetStrings(int portalID, string locale, string qualifier)
       {
-         return GetStrings(portalID, locale, qualifier, true);
-      }
-
-      public List<BabelFishInfo> GetStrings(int portalID, string locale, string qualifier, bool fromCache)
-      {
-         string cacheKey = BabelfishBase.BABELFISH + BabelfishBase.SEPERATOR + "PortalID" + BabelfishBase.SEPERATOR + portalID +
-                           BabelfishBase.SEPERATOR + "Locale" + BabelfishBase.SEPERATOR + locale +
-                           BabelfishBase.SEPERATOR + "Qualifier" + BabelfishBase.SEPERATOR + qualifier;
-
-         if (fromCache)
+         List<BabelFishInfo> aquarium;
+         using (IDataContext ctx = DataContext.Instance())
          {
-            if (DataCache.GetCache(cacheKey) != null)
-               // Object was found in the cache
-               return (List<BabelFishInfo>)DataCache.GetCache(cacheKey);
-            else
-            {
-               // read it from the database and cache it
-               List<BabelFishInfo> aquarium = CBO.FillCollection<BabelFishInfo>(DataProvider.Instance().GetStrings(portalID, locale, qualifier, FallBackLocale));
-               if (aquarium != null)
-                  DataCache.SetCache(cacheKey, aquarium);
-               return aquarium;
-            }
+            aquarium = (List<BabelFishInfo>)ctx.ExecuteQuery<BabelFishInfo>(CommandType.StoredProcedure,
+               "{databaseOwner}{objectQualifier}helferlein_BabelFish_GetStrings",
+               new object[] { portalID, locale, qualifier, FallBackLocale });
          }
-         else
-         {
-            // read it from the database and cache it
-            List<BabelFishInfo> aquarium = CBO.FillCollection<BabelFishInfo>(DataProvider.Instance().GetStrings(portalID, locale, qualifier, FallBackLocale));
-            if (aquarium != null)
-               DataCache.SetCache(cacheKey, aquarium);
-            return aquarium;
-         }
+         return aquarium;
       }
 
       public List<BabelFishInfo> GetStrings(int portalID, string qualifier)
       {
-         return GetStrings(portalID, qualifier, true);
-      }
-
-      public List<BabelFishInfo> GetStrings(int portalID, string qualifier, bool fromCache)
-      {
-         string cacheKey = BabelfishBase.BABELFISH + BabelfishBase.SEPERATOR + "PortalID" + BabelfishBase.SEPERATOR + portalID +
-                           BabelfishBase.SEPERATOR + "Qualifier" + BabelfishBase.SEPERATOR + qualifier;
-
-         if (fromCache)
+         List<BabelFishInfo> aquarium;
+         using (IDataContext ctx = DataContext.Instance())
          {
-            if (DataCache.GetCache(cacheKey) != null)
-               return (List<BabelFishInfo>)DataCache.GetCache(cacheKey);
-            else
-            {
-               List<BabelFishInfo> aquarium = CBO.FillCollection<BabelFishInfo>(DataProvider.Instance().GetStrings(portalID, qualifier, FallBackLocale));
-               if (aquarium != null)
-                  DataCache.SetCache(cacheKey, aquarium);
-               return aquarium;
-            }
+            aquarium = (List<BabelFishInfo>)ctx.ExecuteQuery<BabelFishInfo>(CommandType.StoredProcedure,
+               "{databaseOwner}{objectQualifier}helferlein_BabelFish_GetStringsByQualifier",
+               new object[] { portalID, qualifier, FallBackLocale });
          }
-         else
-         {
-            List<BabelFishInfo> aquarium = CBO.FillCollection<BabelFishInfo>(DataProvider.Instance().GetStrings(portalID, qualifier, FallBackLocale));
-            if (aquarium != null)
-               DataCache.SetCache(cacheKey, aquarium);
-            return aquarium;
-         }
+         return aquarium;
       }
+#endregion
 
       public List<BabelFishInfo> GetStringsByKey(int portalID, string qualifier, string stringKey)
       {
@@ -225,7 +135,7 @@ namespace helferlein.DNN.Modules.BabelFish.Business
       {
          return Add(portalID, locale, qualifier, stringKey, stringText, string.Empty, true);
       }
-      
+
       public int Add(int portalID, string locale, string qualifier, string stringKey, string stringText, string stringComment)
       {
          return Add(new BabelFishInfo(portalID, locale, qualifier, stringKey, stringText, stringComment), true);
@@ -242,8 +152,7 @@ namespace helferlein.DNN.Modules.BabelFish.Business
          if (updateCache)
          {
             fish.ID = id;
-            fish.FallBack = GetString(id, false).FallBack;
-            BabelFishUtils.FishToCache(fish);
+            fish.FallBack = GetString(id).FallBack;
          }
          return id;
       }
@@ -257,7 +166,7 @@ namespace helferlein.DNN.Modules.BabelFish.Business
       {
          return Change(portalID, locale, qualifier, stringKey, stringText, string.Empty);
       }
-      
+
       public int Change(int ID, string stringText, string stringComment, bool updateCache)
       {
          BabelFishInfo fish = GetString(ID);
@@ -280,8 +189,7 @@ namespace helferlein.DNN.Modules.BabelFish.Business
             if (updateCache)
             {
                fish.ID = id;
-               fish.FallBack = GetString(id, false).FallBack;
-               BabelFishUtils.FishToCache(fish);
+               fish.FallBack = GetString(id).FallBack;
             }
          }
          else
@@ -302,8 +210,7 @@ namespace helferlein.DNN.Modules.BabelFish.Business
          {
             foreach (BabelFishInfo fish in aquarium)
             {
-               BabelFishInfo f = GetString(fish.PortalID, fish.Locale, fish.Qualifier, fish.StringKey, false);
-               BabelFishUtils.FishToCache(f);
+               BabelFishInfo f = GetString(fish.PortalID, fish.Locale, fish.Qualifier, fish.StringKey);
             }
          }
          return result;
@@ -315,7 +222,7 @@ namespace helferlein.DNN.Modules.BabelFish.Business
          // portalID-qualifier-stringKey combination
          if (HttpContext.Current != null)
          {
-            BabelFishInfo fish = GetString(ID, false);
+            BabelFishInfo fish = GetString(ID);
             if (fish.Locale == FallBackLocale)
             {
                List<BabelFishInfo> aliens = GetNonFallBackStrings(fish.PortalID, fish.Qualifier, fish.StringKey);
@@ -328,7 +235,6 @@ namespace helferlein.DNN.Modules.BabelFish.Business
             {
                DataProvider.Instance().DeleteString(ID);
             }
-            BabelFishUtils.ClearCache();
          }
          else
             throw new Exception("NO_HTTP_CONTEXT");
@@ -340,7 +246,7 @@ namespace helferlein.DNN.Modules.BabelFish.Business
          // portalID-qualifier-stringKey combination
          if (HttpContext.Current != null)
          {
-            BabelFishInfo fish = GetString(portalID, locale, qualifier, stringKey, false);
+            BabelFishInfo fish = GetString(portalID, locale, qualifier, stringKey);
             if (fish != null)
             {
                if (fish.Locale == FallBackLocale)
@@ -355,7 +261,6 @@ namespace helferlein.DNN.Modules.BabelFish.Business
                {
                   DataProvider.Instance().DeleteString(fish.ID);
                }
-               BabelFishUtils.ClearCache();
             }
          }
          else
@@ -365,7 +270,6 @@ namespace helferlein.DNN.Modules.BabelFish.Business
       public void DropKey(int portalID, string qualifier, string stringKey)
       {
          DataProvider.Instance().DeleteStringKey(portalID, qualifier, stringKey);
-         BabelFishUtils.ClearCache();
       }
 
       public void DropLocale(int portalID, string locale)
@@ -378,7 +282,6 @@ namespace helferlein.DNN.Modules.BabelFish.Business
                DataProvider.Instance().DeletePortal(portalID);
             else
                DataProvider.Instance().DeleteLocale(portalID, locale);
-            BabelFishUtils.ClearCache();
          }
          else
             throw new Exception("NO_HTTP_CONTEXT");
@@ -401,31 +304,6 @@ namespace helferlein.DNN.Modules.BabelFish.Business
          }
          xmlString.Append("</Aquarium>");
          return xmlString.ToString();
-      }
-
-#region IUpgradeable Member
-      public string UpgradeModule(string version)
-      {
-         return string.Format("Upgrading to version {0}", version);
-      }
-#endregion
-   }
-
-   public class QualifierController
-   {
-      public void Drop(int portalID, string qualifier)
-      {
-         DataProvider.Instance().DeleteQualifier(portalID, qualifier);
-      }
-
-      public void Copy(int sourcePortalID, int targetPortalID, string qualifier)
-      {
-         DataProvider.Instance().CopyQualifier(sourcePortalID, targetPortalID, qualifier);
-      }
-
-      public void Copy(int sourcePortalID, int targetPortalID, string locale, string qualifier)
-      {
-         DataProvider.Instance().CopyQualifier(sourcePortalID, targetPortalID, locale, qualifier);
       }
    }
 }
